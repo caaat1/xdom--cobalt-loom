@@ -1,0 +1,59 @@
+# ===== SCRATCH CONVENTIONS =====
+# Keep aligned across git/tsconfig/eslint/prettier — one intent, per-tool
+# dialects. Temp names match the vscode-icons extension's temp-folder set.
+&*
+*.temp
+*.tmp
+-*
+.temp/
+.tmp/
+sandbox/
+scratch/
+temp/
+tmp/
+
+# ===== DEPENDENCIES & LOCKFILE =====
+node_modules/
+# House convention: lockfile not committed (OneDrive-synced solo repos;
+# revisit if the project gains consumers or CI).
+package-lock.json
+
+# ===== ENVIRONMENT =====
+.env
+.env.*.local
+.env.local
+
+# ===== BUILD & CACHE =====
+*.tsbuildinfo
+.cache/
+.eslintcache
+/build/
+/coverage/
+/dist/
+
+# ===== DATABASE & GENERATED =====
+*.db
+*.sqlite
+*.sqlite3
+/generated/
+
+# ===== LOGS =====
+*.log
+logs/
+
+# ===== TOOLING RUNTIME =====
+.claude/settings.local.json
+/.husky/_/
+
+# ===== OS DROPPINGS =====
+# Windows
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+# macOS
+.AppleDouble
+.DS_Store
+.LSOverride
+.Spotlight-V100
+.Trashes
+._*

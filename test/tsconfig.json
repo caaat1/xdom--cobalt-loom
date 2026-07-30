@@ -1,0 +1,40 @@
+{
+  // test/ is executed directly by Node's own native TypeScript stripping
+  // (`node --test`), never compiled by tsc — this config exists purely so
+  // `npm run type-check:test` can still type-check it against the same
+  // strict options, without test/ ever joining the root config's own
+  // `include` (which would make `npm run build` emit dist/test/ too, dead
+  // weight in a real build — this profile's tsc really emits, unlike
+  // vsc-extension's tsc-as-typechecker-only setup where a shared include
+  // costs nothing).
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    // Root tsconfig sets "types": [] (no Node globals in src/'s own
+    // program) — test/ genuinely needs node:test/node:assert's ambient
+    // module declarations, so add "node" back here. "lib" isn't repeated:
+    // the root's ["ES2022", "DOM"] is inherited as-is since this config
+    // doesn't override it.
+    "types": ["node"],
+    // Root's "./src" rootDir (scoped there since it's the one that really
+    // emits) doesn't cover test/, a sibling directory — override to the
+    // project root so this noEmit-only program can include both src/ (via
+    // test/'s own import of it) and test/ itself without TS6059.
+    "rootDir": "..",
+    "tsBuildInfoFile": "../dist/.tsbuildinfo-test"
+  },
+  // Overrides the root config's own inherited "exclude" outright (an
+  // extended config's exclude/include otherwise still resolves against
+  // *its* directory, not this one) — nothing under test/ needs the general
+  // scratch/build excludes anyway.
+  "exclude": [],
+  // If the project has its own src/types/*.d.ts ambient module
+  // augmentations (session typing, etc.), add them here too, e.g.
+  // "../src/types/**/*.ts" — they only apply within a program that
+  // actually includes them; they're never pulled in transitively just by
+  // importing a file that references the augmented type, unlike a normal
+  // value/type import. The root tsconfig gets this for free (src/types is
+  // already under its own "src" include entry); this program needs it
+  // spelled out explicitly since it's a separate program from the root's.
+  "include": ["**/*.ts"]
+}

@@ -1,0 +1,8 @@
+&*
+-*
+.temp/
+.tmp/
+node_modules
+temp/
+tmp/
+tsconfig*.json

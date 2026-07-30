@@ -1,0 +1,91 @@
+{
+  "compilerOptions": {
+    // Type Checking
+
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+
+    // Modules
+
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+    // "./src", not "./" — unlike ts-node-backend, xDom has no sibling
+    // shared/ include root to cover, so rootDir can stay scoped to src/
+    // itself, giving a flat dist/index.js rather than dist/src/index.js.
+    "rootDir": "./src",
+    // Deliberately empty — this is a browser library; auto-including
+    // @types/node here would leak Node globals into src/'s own type
+    // surface. test/tsconfig.json re-adds "node" explicitly, since
+    // test/ (node:test, jsdom) genuinely needs it.
+    "types": [],
+
+    // Emit
+
+    "declaration": true,
+    "declarationMap": true,
+    "newLine": "lf",
+    "noEmit": false,
+    "outDir": "./dist",
+    "removeComments": true,
+    "sourceMap": true,
+
+    // Interop Constraints
+
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+
+    // Language and Environment
+
+    // "DOM" alongside ES2022 is the one non-negotiable divergence from
+    // ts-node-backend's lib list — Node/Element/Document et al. live here.
+    // No emitDecoratorMetadata/experimentalDecorators: nothing in a DOM
+    // wrapper library needs decorators.
+    "lib": ["ES2022", "DOM"],
+    "moduleDetection": "force",
+    "target": "ES2022",
+
+    // Projects
+
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+
+    // Output Formatting
+
+    "noErrorTruncation": true,
+    "pretty": true,
+
+    // Completeness
+
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "**/&*",
+    "**/-*",
+    "**/.temp",
+    "**/.tmp",
+    "**/temp",
+    "**/tmp",
+    "dist",
+    "node_modules"
+  ],
+  // test/ is deliberately not included here — this tsc really emits
+  // (npm run build), and test/ is only ever executed directly by Node's
+  // own native TypeScript stripping (test:unit), never compiled. Including
+  // it would make every `npm run build` also emit a dead-weight dist/test/.
+  // See test/tsconfig.json for the separate config that type-checks it.
+  "include": ["src"]
+}
