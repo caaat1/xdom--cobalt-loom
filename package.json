@@ -44,6 +44,7 @@
     "lint:test": "npm run lint -- ./test",
     "lint:test:fix": "npm run lint:test -- --fix",
     "prepare": "husky",
+    "stats": "tsx stats/general.ts",
     "test": "npm run test:unit",
     "test:unit": "node --import ./test/setup/register.mjs --test \"test/unit/**/*.test.ts\"",
     "type-check": "tsc --noEmit",
@@ -79,6 +80,7 @@
     "lint-staged": "^17.2.0",
     "prettier": "^3.9.6",
     "rimraf": "^6.1.3",
+    "tsx": "^4.21.0",
     "typescript": "6.0.3"
   }
 }

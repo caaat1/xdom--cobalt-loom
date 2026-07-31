@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base href="./graph/" />
+    <meta charset="UTF-8" />
+    <title>xDom stats</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #1e1e1e;
+        color: #ccc;
+        font-family: monospace;
+        padding: 32px;
+      }
+      h1 {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 32px;
+        letter-spacing: 0.1em;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 32px;
+      }
+      .card {
+        background: #252526;
+        border: 1px solid #333;
+        border-radius: 4px;
+        padding: 20px;
+      }
+      .card.wide {
+        grid-column: 1 / -1;
+      }
+      h2 {
+        font-size: 11px;
+        color: #666;
+        letter-spacing: 0.08em;
+        margin-bottom: 16px;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>xDom / src stats</h1>
+    <div class="grid">
+      <div class="card wide">
+        <h2>FILES · LINES · BYTES</h2>
+        <canvas id="c0" height="80"></canvas>
+      </div>
+      <div class="card">
+        <h2>BYTES / FILE</h2>
+        <canvas id="c1" height="120"></canvas>
+      </div>
+      <div class="card">
+        <h2>LINES / FILE</h2>
+        <canvas id="c2" height="120"></canvas>
+      </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

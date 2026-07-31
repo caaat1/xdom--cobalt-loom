@@ -1,0 +1,18 @@
+{
+  "total": {
+    "byte": 9455,
+    "line": 285,
+    "file": 32
+  },
+  "byte": {
+    "per": {
+      "line": 33,
+      "file": 295
+    }
+  },
+  "line": {
+    "per": {
+      "file": 9
+    }
+  }
+}

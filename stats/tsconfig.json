@@ -1,0 +1,16 @@
+{
+  // Boundary marker: claims stats/ for the language service, keeping these
+  // utilities out of the root tsconfig.json's own program (whose "types": []
+  // hides Node globals from src/'s type surface) — stats/ genuinely needs
+  // them, same reasoning as test/tsconfig.json. This program is never built
+  // (general.ts runs directly via `tsx`), so it only needs to type-check.
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+    "tsBuildInfoFile": "../dist/.tsbuildinfo-stats",
+    "types": ["node"]
+  },
+  "exclude": [],
+  "include": ["**/*.ts"]
+}
