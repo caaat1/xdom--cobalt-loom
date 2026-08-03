@@ -60,6 +60,12 @@ export const baseRules = {
   'no-implied-eval': 'off',
   'no-loss-of-precision': 'off',
   'no-magic-numbers': 'off',
+  // Scope-based and file-local: it can't see ambient globals merged in via
+  // `declare global {}` from another file (e.g. XDomConfig in
+  // domDiscriminants.d.ts), producing false positives for exactly the kind
+  // of cross-file global augmentation this framework relies on. TypeScript
+  // itself already checks this, correctly and program-wide.
+  'no-undef': 'off',
   'no-unused-vars': 'off',
 
   // Common backend rules
@@ -109,7 +115,13 @@ export const baseRules = {
   ],
   'unicorn/no-array-reduce': 'error',
   'unicorn/no-instanceof-array': 'error',
-  'unicorn/no-null': 'error',
+  // DOM's own type surface is `null`-idiomatic (Node.parentNode,
+  // Element.textContent, Object.getPrototypeOf, ...), and so is JS itself
+  // (`typeof null === 'object'`). src/ types strictly against lib.dom.d.ts
+  // and language-fundamental semantics, not xDom-invented ones — forcing
+  // `undefined` here would fight the domain this library wraps, not enforce
+  // a convention xDom controls.
+  'unicorn/no-null': 'off',
   'unicorn/prefer-node-protocol': 'error',
   'unicorn/prefer-ternary': 'error',
 

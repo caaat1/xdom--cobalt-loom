@@ -1,4 +1,4 @@
-export class T_NodeWrapper {
+export class NodeWrapper {
   readonly #node: Node
 
   constructor(node: Node) {

@@ -14,8 +14,7 @@
   "lint-staged": {
     "*.{js,mjs,cjs,ts,mts,cts,tsx,jsx}": [
       "prettier --write",
-      "npm run lint:src:fix",
-      "npm run lint:test:fix"
+      "npm run lint -- --fix"
     ],
     "*.{json,md,yml,yaml}": [
       "prettier --write"
