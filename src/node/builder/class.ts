@@ -37,6 +37,7 @@ export abstract class NodeBuilder<
     }
   }
   protected abstract getParamDefault(): T_NodeParamBundle[1][1]
+  /** @inheritdoc */
   _lf(): this {
     return this
   }
