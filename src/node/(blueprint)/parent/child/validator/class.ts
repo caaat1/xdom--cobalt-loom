@@ -4,87 +4,86 @@ import type { NodeBlueprintCtorWide } from '../../../../blueprint/ctor/wide/type
 import type { ValidatorCb } from './cb/type.js'
 
 export class ChildValidator<
-  T_ParentUnionBlueprint,
-  T_ChildUnionBlueprintAllowedAccumulator = never,
+  T_NodeBlueprintParent,
+  T_NodeBlueprintChildAllowedAccumulator = never,
 > implements _lf {
-  // T_ChildUnionBlueprintAllowedAccumulator appears in both parameter
-  // (contravariant) and return (covariant) positions, making it invariant:
-  // the registered set must exactly match the declared union — no more, no
-  // less. Trade-off: a subclass that extends the allowed set must also update
-  // the static field's type annotation to match, or TS will error. To fall
-  // back to a lower-bound-only check (superset registrations allowed), change
-  // the return type back to `void`.
+  /**
+   * T_NodeBlueprintChildAllowedAccumulator appears in both parameter
+   * (contravariant) and return (covariant) positions, making it invariant:
+   * the registered set must exactly match the declared union — no more, no
+   * less. Trade-off: a subclass that extends the allowed set must also update
+   * the static field's type annotation to match, or TS will error. To fall
+   * back to a lower-bound-only check (superset registrations allowed), change
+   * the return type back to `void`.
+   */
   declare protected readonly _childAllowed: (
-    _: T_ChildUnionBlueprintAllowedAccumulator
-  ) => T_ChildUnionBlueprintAllowedAccumulator
+    _: T_NodeBlueprintChildAllowedAccumulator
+  ) => T_NodeBlueprintChildAllowedAccumulator
   private readonly map = new Map<NodeBlueprintCtorWide<unknown>, unknown>()
-  // connect<T_ChildUnionBlueprint>({
-  //   xDomParentUnion,
-  //   xDomChildUnionCreated,
+  // connect<T_NodeBlueprintChild>({
+  //   nodeBlueprintParent,
+  //   nodeBuiltChild,
   // }: {
-  //   xDomParentUnion: T_ParentUnionBlueprint & {
-  //     create(param: { doc: Document }): { node: Node }
+  //   nodeBlueprintParent: T_NodeBlueprintParent & {
+  //     build(param: { doc: Document }): { node: Node }
   //   }
-  //   xDomChildUnionCreated: {
+  //   nodeBuiltChild: {
   //     node: Node
-  //     xDomNode: T_ChildUnionBlueprint
+  //     nodeBlueprint: T_NodeBlueprintChild
   //   }
   // }): this {
   //   if (
   //     this.validate({
-  //       xDomParentUnion,
-  //       xDomChildUnion: xDomChildUnionCreated.xDomNode,
+  //       nodeBlueprintParent,
+  //       nodeBlueprintChild: nodeBuiltChild.nodeBlueprint,
   //     })
   //   ) {
-  //     const { node } = xDomParentUnion.create({
-  //       doc: getDoc(xDomChildUnionCreated),
+  //     const { node } = nodeBlueprintParent.build({
+  //       doc: getDoc(nodeBuiltChild),
   //     })
-  //     xDomChildUnionCreated.node.appendChild(node)
+  //     nodeBuiltChild.node.appendChild(node)
   //   } else {
   //     throw new Error('Invalid parent/child')
   //   }
   //   return this
   // }
-  registerChildAllowed<T_ChildUnionBlueprint>(
-    childCtor: NodeBlueprintCtorWide<T_ChildUnionBlueprint>,
+  registerChildAllowed<T_NodeBlueprintChild>(
+    childCtor: NodeBlueprintCtorWide<T_NodeBlueprintChild>,
     validator:
-      ValidatorCb<T_ParentUnionBlueprint, T_ChildUnionBlueprint> | undefined
+      ValidatorCb<T_NodeBlueprintParent, T_NodeBlueprintChild> | undefined
   ): ChildValidator<
-    T_ParentUnionBlueprint,
-    T_ChildUnionBlueprintAllowedAccumulator | T_ChildUnionBlueprint
+    T_NodeBlueprintParent,
+    T_NodeBlueprintChildAllowedAccumulator | T_NodeBlueprintChild
   > {
     this.map.set(childCtor, validator)
     // `ReturnType<typeof this.registerChildAllowed>` cannot be used here: the
     // invariant phantom (_childAllowed) causes TS to resolve the unbound
-    // method-level T_ChildUnionBlueprint to `unknown`, yielding
+    // method-level T_NodeBlueprintChild to `unknown`, yielding
     // ChildValidator<P, Acc | unknown> = ChildValidator<P, unknown>, which
     // fails the invariant check against the declared return type.
     return this as unknown as ChildValidator<
-      T_ParentUnionBlueprint,
-      T_ChildUnionBlueprintAllowedAccumulator | T_ChildUnionBlueprint
+      T_NodeBlueprintParent,
+      T_NodeBlueprintChildAllowedAccumulator | T_NodeBlueprintChild
     >
   }
-  validate<T_ChildUnionBlueprint>({
-    xDomParentUnion,
-    xDomChildUnion,
+  validate<T_NodeBlueprintChild>({
+    nodeBlueprintParent,
+    nodeBlueprintChild,
   }: {
-    xDomParentUnion: T_ParentUnionBlueprint
-    xDomChildUnion: T_ChildUnionBlueprint
+    nodeBlueprintParent: T_NodeBlueprintParent
+    nodeBlueprintChild: T_NodeBlueprintChild
   }): boolean {
     const childCtor = (
-      xDomChildUnion as {
-        constructor: NodeBlueprintCtorWide<T_ChildUnionBlueprint>
+      nodeBlueprintChild as {
+        constructor: NodeBlueprintCtorWide<T_NodeBlueprintChild>
       }
     ).constructor
     const rawCb = this.map.get(childCtor)
     if (rawCb === undefined) {
       return true
     }
-    const cb = rawCb as ValidatorCb<
-      T_ParentUnionBlueprint,
-      T_ChildUnionBlueprint
-    >
-    return cb({ xDomParentUnion, xDomChildUnion })
+    const cb = rawCb as ValidatorCb<T_NodeBlueprintParent, T_NodeBlueprintChild>
+    return cb({ nodeBlueprintParent, nodeBlueprintChild })
   }
   _lf(): this {
     return this

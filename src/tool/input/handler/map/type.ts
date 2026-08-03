@@ -2,12 +2,12 @@ import type { InputHandlerIntermediate } from '../../(handler)/intermediate/clas
 import type { InputHandler } from '../class.js'
 import type { NextHandlerMap } from '../next/type.js'
 
-export type InputMap<TNext extends NextHandlerMap> = {
-  [K in keyof TNext]?: NonNullable<TNext[K]> extends InputHandlerIntermediate<
+export type InputMap<T_Next extends NextHandlerMap> = {
+  [K in keyof T_Next]?: NonNullable<T_Next[K]> extends InputHandlerIntermediate<
     infer TNextNested
   >
     ? InputMap<TNextNested>
-    : NonNullable<TNext[K]> extends InputHandler<infer TInput>
-      ? TInput
+    : NonNullable<T_Next[K]> extends InputHandler<infer T_Input>
+      ? T_Input
       : never
 }

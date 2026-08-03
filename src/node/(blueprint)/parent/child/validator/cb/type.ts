@@ -1,7 +1,7 @@
-export type ValidatorCb<T_ParentUnionBlueprint, T_ChildUnionBlueprint> = ({
-  xDomParentUnion,
-  xDomChildUnion,
+export type ValidatorCb<T_NodeBlueprintParent, T_NodeBlueprintChild> = ({
+  nodeBlueprintParent,
+  nodeBlueprintChild,
 }: {
-  xDomParentUnion: T_ParentUnionBlueprint
-  xDomChildUnion: T_ChildUnionBlueprint
+  nodeBlueprintParent: T_NodeBlueprintParent
+  nodeBlueprintChild: T_NodeBlueprintChild
 }) => boolean

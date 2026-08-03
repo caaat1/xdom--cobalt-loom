@@ -52,8 +52,10 @@
 
     // "DOM" alongside ES2022 is the one non-negotiable divergence from
     // ts-node-backend's lib list — Node/Element/Document et al. live here.
-    // No emitDecoratorMetadata/experimentalDecorators: nothing in a DOM
-    // wrapper library needs decorators.
+    // experimentalDecorators: the tool/(decorator) framework is written
+    // against the legacy (target, propertyKey, descriptor?) signature, not
+    // TC39 decorators — no emitDecoratorMetadata, nothing here reflects types.
+    "experimentalDecorators": true,
     "lib": ["ES2022", "DOM"],
     "moduleDetection": "force",
     "target": "ES2022",

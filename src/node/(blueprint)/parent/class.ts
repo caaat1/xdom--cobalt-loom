@@ -1,7 +1,7 @@
+import type { NodeChild } from '../../../(node)/child/type.js'
+import type { NodeParent } from '../../../(node)/parent/type.js'
 import { NodeBlueprint } from '../../blueprint/class.js'
 import type { NodeBundle } from '../../bundle/type.js'
-import type { UnionChild } from '../../union/child/type.js'
-import type { UnionParent } from '../../union/parent/type.js'
 import type { NodeBlueprintChild } from '../child/type.js'
 
 import { ChildAccumulator } from './child/accumulator/class.js'
@@ -9,11 +9,11 @@ import type { ChildValidator } from './child/validator/class.js'
 
 export abstract class NodeBlueprintParent<
   T_ParentBundle extends NodeBundle<
-    UnionParent,
+    NodeParent,
     NodeBlueprintParent<T_ParentBundle, T_ChildAllowedBundle>
   >,
   T_ChildAllowedBundle extends NodeBundle<
-    UnionChild,
+    NodeChild,
     NodeBlueprintChild<T_ChildAllowedBundle>
   >,
 > extends NodeBlueprint<T_ParentBundle> {
