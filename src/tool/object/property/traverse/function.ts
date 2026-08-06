@@ -1,6 +1,6 @@
 // ─── Internal Traversal Core ──────────────────────────────────────────────────
-import type { ObjectFieldTraverseOption } from './option/type.js'
-import type { ObjectFieldTraverseVisit } from './visit/type.js'
+import type { ObjectPropertyTraverseOption } from './option/type.js'
+import type { ObjectPropertyTraverseVisit } from './visit/type.js'
 /**
  * Shared traversal core used by both `safeIterateFields` and `isTraversable`.
  *
@@ -15,14 +15,14 @@ import type { ObjectFieldTraverseVisit } from './visit/type.js'
  *  - `'abort'` — stop the whole traversal and return `false`
  *  - `'ok'`    — continue normally
  */
-export function traverse({
+export function traverseObjectProperty({
   obj,
   option,
   visit,
 }: {
   obj: object
-  option: ObjectFieldTraverseOption | undefined
-  visit: ObjectFieldTraverseVisit
+  option: ObjectPropertyTraverseOption | undefined
+  visit: ObjectPropertyTraverseVisit
 }): boolean {
   // ── 1. Collect string keys ────────────────────────────────────────────────
   let names: string[]

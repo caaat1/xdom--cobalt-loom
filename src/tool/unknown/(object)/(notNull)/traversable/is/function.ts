@@ -1,6 +1,6 @@
-import { traverse } from '../../../../../object/field/traverse/function.js'
-import type { ObjectFieldTraverseOption } from '../../../../../object/field/traverse/option/type.js'
-import type { VisitResult } from '../../../../../object/field/traverse/visit/result/type.js'
+import { traverseObjectProperty } from '../../../../../object/property/traverse/function.js'
+import type { ObjectPropertyTraverseOption } from '../../../../../object/property/traverse/option/type.js'
+import type { ObjectPropertyTraverseVisitResult } from '../../../../../object/property/traverse/visit/result/type.js'
 import { isObjectNotNull } from '../../../notNull/is/function.js'
 
 /**
@@ -17,7 +17,7 @@ import { isObjectNotNull } from '../../../notNull/is/function.js'
  */
 export function isTraversable(
   value: unknown,
-  option?: ObjectFieldTraverseOption & {
+  option?: ObjectPropertyTraverseOption & {
     /**
      * When `true`, attempt to read every property value.
      * Any failure (thrown getter / proxy trap) returns `false`.
@@ -27,10 +27,10 @@ export function isTraversable(
 ): value is object {
   return (
     isObjectNotNull(value) &&
-    traverse({
+    traverseObjectProperty({
       obj: value,
       option,
-      visit: ({ desc, key, readValue }): VisitResult => {
+      visit: ({ desc, key, readValue }): ObjectPropertyTraverseVisitResult => {
         void key
         if (option?.requireValueAccess !== true) {
           return 'ok'

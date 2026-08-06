@@ -1,5 +1,5 @@
 import type { NodeParamKeyOptional } from '../(key)/optional/type.js'
-import type { PartialBy } from '../../../tool/(object)/(partial)/by/type.js'
+import type { PartialByKey } from '../../../tool/(object)/(partial)/by/key/type.js'
 import type { NodeParam } from '../type.js'
 
 export type NodeParamBundle<
@@ -8,7 +8,7 @@ export type NodeParamBundle<
 > = [
   obj: T_NodeParam,
   optional: [
-    partially: PartialBy<T_NodeParam, T_NodeParamKeyOptional>,
+    partially: PartialByKey<T_NodeParam, T_NodeParamKeyOptional>,
     defaults: Pick<T_NodeParam, T_NodeParamKeyOptional>,
     key: T_NodeParamKeyOptional,
   ],

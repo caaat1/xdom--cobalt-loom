@@ -1,9 +1,9 @@
 // ─── Public API ───────────────────────────────────────────────────────────────
-import { isObjectNotNull } from '@/tool/unknown/is/(object)/notNull/function.js'
 
-import { traverse } from '../../traverse/function.js'
-import type { Option } from '../../traverse/option/type.js'
-import type { VisitResult } from '../../traverse/visit/result/type.js'
+import { isObjectNotNull } from '../../../../unknown/(object)/notNull/is/function.js'
+import { traverseObjectProperty } from '../../traverse/function.js'
+import type { ObjectPropertyTraverseOption } from '../../traverse/option/type.js'
+import type { ObjectPropertyTraverseVisitResult } from '../../traverse/visit/result/type.js'
 
 import type { Cb } from './cb/type.js'
 /**
@@ -14,13 +14,13 @@ import type { Cb } from './cb/type.js'
  * - Keys whose descriptor or value cannot be read are silently skipped.
  * - `null` / `undefined` / primitives are no-ops.
  */
-export function traverseSafe({
+export function safeTraverseObjectProperty({
   cb,
   option,
   value,
 }: {
   cb: Cb
-  option?: Option & {
+  option?: ObjectPropertyTraverseOption & {
     /** When `false` (default) accessor properties are skipped entirely. */
     readAccessors?: false | true
   }
@@ -29,10 +29,10 @@ export function traverseSafe({
   if (isObjectNotNull(value) === false) {
     return
   }
-  traverse({
+  traverseObjectProperty({
     obj: value,
     option,
-    visit: ({ desc, key, readValue }): VisitResult => {
+    visit: ({ desc, key, readValue }): ObjectPropertyTraverseVisitResult => {
       // Skip accessors unless explicitly allowed
       const isAccessor =
         desc !== undefined && (desc.get !== undefined || desc.set !== undefined)
