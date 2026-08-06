@@ -1,5 +1,5 @@
-type StringifiableSamples = typeof stringifiableSamples
-export const stringifiableSamples: {
+type StringifiableSample = typeof stringifiableSample
+const stringifiableSample: {
   string: string
   boolean: boolean
   number: number
@@ -12,6 +12,7 @@ export const stringifiableSamples: {
   symbol: Symbol(),
   bigint: 0n,
 } as const satisfies {
-  [K in keyof StringifiableSamples]: StringifiableSamples[K]
+  [K in keyof StringifiableSample]: StringifiableSample[K]
 }
-export type Stringifiable = StringifiableSamples[keyof StringifiableSamples]
+void stringifiableSample
+export type Stringifiable = StringifiableSample[keyof StringifiableSample]
