@@ -25,3 +25,4 @@ A TypeScript library of DOM node wrappers.
 - `verbatimModuleSyntax` is on — use `import type` for type-only imports.
 - `moduleDetection: "force"` — every file is a module; global augmentations must use `declare global {}`.
 - Root `tsconfig.json` sets `"types": []` — `src/` never picks up ambient Node globals. `test/tsconfig.json` re-adds `"node"` for `node:test`/`node:assert`.
+- A cross-file reference inside a JSDoc comment uses `@see {@link relative/path.js}`, never a bare backticked path in prose — plain comment text isn't part of the module graph, so no tooling (VS Code's "update imports on file move", `tsc`, refactors) keeps it in sync on rename; `@see {@link ...}` is at least greppable and gets TS's best-effort hover/navigation resolution.
