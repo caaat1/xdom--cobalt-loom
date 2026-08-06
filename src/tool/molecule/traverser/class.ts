@@ -1,11 +1,11 @@
+import { isAtomUnion } from '../../(molecule)/(atom)/union/is/function.js'
+import { isMoleculePolyatomic } from '../../(molecule)/polyatomic/type.js'
 import type { TypeDescription } from '../../type/description/type.js'
-import { isAtomUnion } from '../atom/union/type.js'
 import { MoleculeBundleArray } from '../bundle/array/class.js'
 import type { MoleculeBundle } from '../bundle/type.js'
 import type { MoleculeEntryArray } from '../entry/array/type.js'
 import type { MoleculeEntry } from '../entry/type.js'
 import type { MoleculePath } from '../path/type.js'
-import { isMoleculePolyatomic } from '../polyatomic/type.js'
 import { MoleculeTypeError } from '../type/error.js'
 import type { Molecule } from '../type.js'
 

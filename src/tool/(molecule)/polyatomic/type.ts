@@ -1,5 +1,5 @@
 import { isPojo } from '../../(object)/pojo/is/function.js'
-import { type Molecule, isMolecule } from '../type.js'
+import { type Molecule, isMolecule } from '../../molecule/type.js'
 
 import type { MoleculePolyatomicArray } from './array/type.js'
 import type { MoleculePolyatomicMap } from './map/type.js'

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isMoleculePolyatomic } from '../../src/tool/molecule/polyatomic/type.js'
+import { isMoleculePolyatomic } from '../../src/tool/(molecule)/polyatomic/type.js'
 
 const typeGuard = {
   isAtom: (value: unknown): value is number => typeof value === 'number',
@@ -21,7 +21,6 @@ await test('isMoleculePolyatomic rejects an array containing an invalid molecule
 })
 
 await test('isMoleculePolyatomic rejects null', () => {
-  // eslint-disable-next-line unicorn/no-null -- exercising the function's own `!== null` guard
   assert.equal(isMoleculePolyatomic(null, typeGuard), false)
 })
 

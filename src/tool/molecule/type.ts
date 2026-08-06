@@ -1,10 +1,10 @@
-import type { TypeDescription } from '../type/description/type.js'
-
-import { type AtomUnion, isAtomUnion } from './atom/union/type.js'
+import { isAtomUnion } from '../(molecule)/(atom)/union/is/function.js'
+import type { AtomUnion } from '../(molecule)/(atom)/union/type.js'
 import {
   type MoleculePolyatomic,
   isMoleculePolyatomic,
-} from './polyatomic/type.js'
+} from '../(molecule)/polyatomic/type.js'
+import type { TypeDescription } from '../type/description/type.js'
 
 export type Molecule<T_Atom, T_Shorthand> =
   AtomUnion<T_Atom, T_Shorthand> | MoleculePolyatomic<T_Atom, T_Shorthand>

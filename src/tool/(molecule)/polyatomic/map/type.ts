@@ -1,4 +1,4 @@
-import type { Molecule } from '../../type.js'
+import type { Molecule } from '../../../molecule/type.js'
 
 import type { MoleculePolyatomicMapKey } from './key/type.js'
 

@@ -1,7 +1,5 @@
-import type { TypeDescription } from '../../../type/description/type.js'
+import type { AtomUnion } from '../type.js'
 
-export const typeDescription: TypeDescription = `AtomUnion is either an Atom or a Shorthand for an Atom.`
-export type AtomUnion<T_Atom, T_Shorthand> = T_Atom | T_Shorthand
 export function isAtomUnion<T_Atom, T_Shorthand>(
   value: unknown,
   typeGuard: {
