@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isPojo } from '../../src/tool/unknown/(object)/(notNull)/pojo/is/function.js'
+import { isPojo } from '../../../src/tool/unknown/(object)/(notNull)/pojo/is/function.js'
 
-// Not the same isPojo as test/unit/isPojo.test.ts — that one covers
+// Not the same isPojo as test/unit/object/pojo.test.ts — that one covers
 // tool/(object)/pojo (the one actually wired into MoleculePolyatomic),
 // which takes an already-narrowed `object` and treats a null-prototype
 // object as a POJO. This isPojo takes `unknown` and, by design, excludes

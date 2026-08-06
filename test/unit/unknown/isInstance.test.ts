@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isInstance } from '../../src/tool/unknown/(object)/(notNull)/instance/is/function.js'
+import { isInstance } from '../../../src/tool/unknown/(object)/(notNull)/instance/is/function.js'
 
 await test('isInstance accepts a class instance', () => {
   class Foo {}

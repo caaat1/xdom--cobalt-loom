@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { UserInputHandlerIntermediate } from '../../src/tool/user/input/(handler)/intermediate/class.js'
-import { UserInputHandler } from '../../src/tool/user/input/handler/class.js'
-import { UserInputHandlerError } from '../../src/tool/user/input/handler/error.js'
+import { UserInputHandlerIntermediate } from '../../../src/tool/user/input/(handler)/intermediate/class.js'
+import { UserInputHandler } from '../../../src/tool/user/input/handler/class.js'
+import { UserInputHandlerError } from '../../../src/tool/user/input/handler/error.js'
 
 class StringHandler extends UserInputHandler<string> {
   protected canSetSafely(value: unknown): value is string {

@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { MoleculeTraverser } from '../../src/tool/molecule/traverser/class.js'
-import { MoleculeTypeError } from '../../src/tool/molecule/type/error.js'
+import { MoleculeTraverser } from '../../../src/tool/molecule/traverser/class.js'
+import { MoleculeTypeError } from '../../../src/tool/molecule/type/error.js'
 
 // Atoms are numbers, atom shorthands are strings; a shorthand casts to its
 // own length so a shorthand-derived atom is distinguishable from a bare one

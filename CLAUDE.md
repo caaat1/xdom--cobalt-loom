@@ -5,14 +5,14 @@ A TypeScript library of DOM node wrappers.
 ## Commands
 
 - `npm run build` — emit `dist/index.js` + `dist/index.d.ts` via `tsc`
-- `npm run test` — run the unit suite: `test:unit` (Node's native `node --test` against flat files in `test/unit/*.test.ts`) then `test:unit:decorators` (`tsx --test` against `test/unit/decorator/**/*.test.ts`) — Node's native TypeScript stripping only erases types, it cannot parse decorator syntax at all (confirmed: hard `SyntaxError`, not a semantics gap), so any spec exercising `src/tool/(decorator)` must live under `test/unit/decorator/` and run through `tsx` instead
+- `npm run test` — run the unit suite: `test:unit` (Node's native `node --test` against `test/unit/**/*.test.ts`) then `test:unit:decorators` (`tsx --test` against `test/decorator/**/*.test.ts`) — Node's native TypeScript stripping only erases types, it cannot parse decorator syntax at all (confirmed: hard `SyntaxError`, not a semantics gap), so any spec exercising `src/tool/(decorator)` must live under the sibling `test/decorator/`, outside `test/unit/`'s own recursive glob, and run through `tsx` instead
 - `npm run validate` — type-check + lint + format check + test; must pass before push
 - `npm run lint:src:fix` — lint with autofix over `./src`
 
 ## Architecture
 
 - `src/` — the library's public surface; typed strictly against `lib.dom.d.ts` interfaces (`Node`, `Element`, `Document`, ...), never a concrete DOM implementation's own classes. This is what makes xDom implementation-agnostic (jsdom, happy-dom, a real browser, ...) for free, via structural typing — no adapter/compatibility layer exists or is planned unless a real behavioral divergence between implementations is actually hit.
-- `test/` — unit tests instantiate real DOM nodes via `jsdom` (a devDependency only, never imported from `src/`) to exercise the wrappers against a real implementation.
+- `test/` — unit tests instantiate real DOM nodes via `jsdom` (a devDependency only, never imported from `src/`) to exercise the wrappers against a real implementation. `test/unit/` is grouped one level deep to mirror `src/tool/`'s own top-level categories (`molecule/`, `object/`, `unknown/`, `user/`, ...) — not a full 1:1 mirror of every nested/parenthesized segment, these files are still small. A same-named export living in two different `src/tool/` subtrees (e.g. the two `isPojo`s) disambiguates via that same directory nesting rather than a suffixed filename.
 - Entry point is `src/index.ts` (not `_index.ts` — that house convention marks a _runnable_ entry; a library's entry is imported, not executed).
 - `rootDir` is scoped to `./src` (not `./` like the backend profile) — there's no sibling `shared/` include root here, so the build emits a flat `dist/index.js` rather than `dist/src/index.js`.
 

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isPojo } from '../../src/tool/(object)/pojo/is/function.js'
+import { isPojo } from '../../../src/tool/(object)/pojo/is/function.js'
 
 await test('isPojo accepts an object literal', () => {
   assert.equal(isPojo({}), true)

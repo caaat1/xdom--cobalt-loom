@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isNonPrimitive } from '../../src/tool/unknown/nonPrimitive/is/function.js'
+import { isNonPrimitive } from '../../../src/tool/unknown/nonPrimitive/is/function.js'
 
 await test('isNonPrimitive accepts an object literal', () => {
   assert.equal(isNonPrimitive({}), true)

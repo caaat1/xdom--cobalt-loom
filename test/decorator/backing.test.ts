@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { backMethod } from '../../../src/tool/(decorator)/(member)/method/back/function.js'
-import { backProperty } from '../../../src/tool/(decorator)/(member)/property/back/function.js'
-import { enforceBacking } from '../../../src/tool/class/(member)/backing/enforce/function.js'
+import { backMethod } from '../../src/tool/(decorator)/(member)/method/back/function.js'
+import { backProperty } from '../../src/tool/(decorator)/(member)/property/back/function.js'
+import { enforceBacking } from '../../src/tool/class/(member)/backing/enforce/function.js'
 
 class Base {
   concreteMethod(): string {

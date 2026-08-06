@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isAmong } from '../../src/tool/unknown/among/is/function.js'
+import { isAmong } from '../../../src/tool/unknown/among/is/function.js'
 
 await test('isAmong accepts a value present in the list', () => {
   assert.equal(isAmong(2, [1, 2, 3]), true)

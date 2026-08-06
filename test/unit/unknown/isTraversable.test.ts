@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isTraversable } from '../../src/tool/unknown/(object)/(notNull)/traversable/is/function.js'
+import { isTraversable } from '../../../src/tool/unknown/(object)/(notNull)/traversable/is/function.js'
 
 await test('isTraversable rejects null', () => {
   assert.equal(isTraversable(null), false)

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isMolecule } from '../../src/tool/molecule/type.js'
+import { isMolecule } from '../../../src/tool/molecule/type.js'
 
 const typeGuard = {
   isAtom: (value: unknown): value is number => typeof value === 'number',

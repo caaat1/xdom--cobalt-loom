@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { traverseObjectProperty } from '../../src/tool/object/property/traverse/function.js'
+import { traverseObjectProperty } from '../../../src/tool/object/property/traverse/function.js'
 
 await test('traverseObjectProperty visits every own enumerable string key and returns true', () => {
   const visited: (string | symbol)[] = []

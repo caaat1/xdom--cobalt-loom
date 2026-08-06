@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { finalizeMethod } from '../../../src/tool/(decorator)/(member)/method/finalize/function.js'
-import { finalizeProperty } from '../../../src/tool/(decorator)/(member)/property/finalize/function.js'
-import { enforceFinal } from '../../../src/tool/class/(member)/final/enforce/function.js'
+import { finalizeMethod } from '../../src/tool/(decorator)/(member)/method/finalize/function.js'
+import { finalizeProperty } from '../../src/tool/(decorator)/(member)/property/finalize/function.js'
+import { enforceFinal } from '../../src/tool/class/(member)/final/enforce/function.js'
 
 class Base {
   @finalizeProperty

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { safeTraverseObjectProperty } from '../../src/tool/object/property/(traverse)/safe/function.js'
+import { safeTraverseObjectProperty } from '../../../src/tool/object/property/(traverse)/safe/function.js'
 
 await test('safeTraverseObjectProperty is a no-op for null', () => {
   let calls = 0

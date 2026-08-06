@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isObjectNotNull } from '../../src/tool/unknown/(object)/notNull/is/function.js'
+import { isObjectNotNull } from '../../../src/tool/unknown/(object)/notNull/is/function.js'
 
 await test('isObjectNotNull accepts an object literal', () => {
   assert.equal(isObjectNotNull({}), true)

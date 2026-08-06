@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isAtomUnion } from '../../src/tool/(molecule)/(atom)/union/is/function.js'
+import { isAtomUnion } from '../../../src/tool/(molecule)/(atom)/union/is/function.js'
 
 const typeGuard = {
   isAtom: (value: unknown): value is number => typeof value === 'number',

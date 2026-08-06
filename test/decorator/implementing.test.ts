@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { implementMethod } from '../../../src/tool/(decorator)/(member)/method/implement/function.js'
-import { implementProperty } from '../../../src/tool/(decorator)/(member)/property/implement/function.js'
-import { enforceImplementing } from '../../../src/tool/class/(member)/implementing/enforce/function.js'
+import { implementMethod } from '../../src/tool/(decorator)/(member)/method/implement/function.js'
+import { implementProperty } from '../../src/tool/(decorator)/(member)/property/implement/function.js'
+import { enforceImplementing } from '../../src/tool/class/(member)/implementing/enforce/function.js'
 
 const CONTRACT = 'Labeled'
 const CONTRACT_KEYS = ['label', 'describe'] as const
