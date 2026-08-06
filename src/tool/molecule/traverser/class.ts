@@ -9,7 +9,7 @@ import type { MoleculePath } from '../path/type.js'
 import { MoleculeTypeError } from '../type/error.js'
 import type { Molecule } from '../type.js'
 
-import type { HandleMethodParam } from './handle/param/type.js'
+import type { HandleParam } from './handle/param/type.js'
 
 export class MoleculeTraverser<T_Atom, T_AtomShorthand, T_StaticData> {
   readonly traverse: <T extends T_StaticData>(param: {
@@ -48,9 +48,7 @@ export class MoleculeTraverser<T_Atom, T_AtomShorthand, T_StaticData> {
       isAtomShorthand: (molecule: unknown) => molecule is T_AtomShorthand
     }
     castToAtom: (atomShorthand: T_AtomShorthand) => T_Atom
-    handle: <T extends T_StaticData>(
-      param: HandleMethodParam<T_Atom, T>
-    ) => void
+    handle: <T extends T_StaticData>(param: HandleParam<T_Atom, T>) => void
   }) {
     this.traverse = <T extends T_StaticData>({
       molecule,
