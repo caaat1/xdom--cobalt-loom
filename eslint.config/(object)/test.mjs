@@ -57,6 +57,13 @@ export const eslintConfigTest = {
     // to usefully catch there. If a project's tests never touch fs at all,
     // this override is simply inert.
     'security/detect-non-literal-fs-filename': 'off',
+    // src/'s no-magic-numbers config exists to catch unexplained tunable/
+    // business-logic constants buried in production code — a real hazard
+    // there. Inside a test, a literal like `assert.equal(sum(2, 3), 5)` IS
+    // the test's data, not a hidden constant; forcing it behind a named
+    // const or swapping it for an arbitrary string just to satisfy the rule
+    // adds indirection without the payoff the rule exists for.
+    '@typescript-eslint/no-magic-numbers': 'off',
     // src/'s own explicit-function-return-type config (allowExpressions:
     // false, allowTypedFunctionExpressions: false) means even a trivial
     // inline predicate needs its own annotation — appropriate for src/'s

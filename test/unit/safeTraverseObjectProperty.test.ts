@@ -20,7 +20,7 @@ await test('safeTraverseObjectProperty is a no-op for a primitive value', () => 
     cb: () => {
       calls++
     },
-    value: 'not an object',
+    value: 42,
   })
   assert.equal(calls, 0)
 })
@@ -31,19 +31,19 @@ await test('safeTraverseObjectProperty calls cb for every own data property', ()
     cb: ({ key, value }) => {
       seen.push([key, value])
     },
-    value: { a: 'x', b: 'y' },
+    value: { a: 1, b: 2 },
   })
   assert.deepEqual(seen, [
-    ['a', 'x'],
-    ['b', 'y'],
+    ['a', 1],
+    ['b', 2],
   ])
 })
 
 await test('safeTraverseObjectProperty skips accessor properties by default', () => {
   const obj = {
-    a: 'x',
-    get b(): string {
-      return 'y'
+    a: 1,
+    get b(): number {
+      return 2
     },
   }
   const seenKeys: (string | symbol)[] = []
@@ -58,9 +58,9 @@ await test('safeTraverseObjectProperty skips accessor properties by default', ()
 
 await test('safeTraverseObjectProperty calls cb for an accessor when readAccessors is true', () => {
   const obj = {
-    a: 'x',
-    get b(): string {
-      return 'y'
+    a: 1,
+    get b(): number {
+      return 2
     },
   }
   const seen: [string | symbol, unknown][] = []
@@ -72,18 +72,18 @@ await test('safeTraverseObjectProperty calls cb for an accessor when readAccesso
     value: obj,
   })
   assert.deepEqual(seen, [
-    ['a', 'x'],
-    ['b', 'y'],
+    ['a', 1],
+    ['b', 2],
   ])
 })
 
 await test('safeTraverseObjectProperty silently skips a property whose accessor throws', () => {
   const obj = {
-    a: 'x',
-    get b(): string {
+    a: 1,
+    get b(): number {
       throw new Error('boom')
     },
-    c: 'z',
+    c: 3,
   }
   const seenKeys: (string | symbol)[] = []
   assert.doesNotThrow(() => {

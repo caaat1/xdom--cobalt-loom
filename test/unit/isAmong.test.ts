@@ -4,11 +4,11 @@ import { test } from 'node:test'
 import { isAmong } from '../../src/tool/unknown/among/is/function.js'
 
 await test('isAmong accepts a value present in the list', () => {
-  assert.equal(isAmong('b', ['a', 'b', 'c']), true)
+  assert.equal(isAmong(2, [1, 2, 3]), true)
 })
 
 await test('isAmong rejects a value absent from the list', () => {
-  assert.equal(isAmong('d', ['a', 'b', 'c']), false)
+  assert.equal(isAmong(4, [1, 2, 3]), false)
 })
 
 await test('isAmong compares objects by reference, not shape', () => {

@@ -102,14 +102,14 @@ await test('traverseObjectProperty ignores symbol keys unless includeSymbols is 
 await test('traverseObjectProperty readValue reads a data property lazily', () => {
   const values: unknown[] = []
   traverseObjectProperty({
-    obj: { a: 'x', b: 'y' },
+    obj: { a: 1, b: 2 },
     option: undefined,
     visit: ({ readValue }) => {
       values.push(readValue())
       return 'ok'
     },
   })
-  assert.deepEqual(values, ['x', 'y'])
+  assert.deepEqual(values, [1, 2])
 })
 
 await test('traverseObjectProperty readValue returns undefined for an accessor unless readAccessors is set', () => {

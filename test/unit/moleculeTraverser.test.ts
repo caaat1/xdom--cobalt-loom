@@ -48,16 +48,15 @@ await test('MoleculeTraverser converts a shorthand atom via castToAtom before ca
 })
 
 await test('MoleculeTraverser recurses into a polyatomic array, tracking index paths in order', () => {
-  const thirdAtom = 3
   const calls: unknown[] = []
   makeTraverser((param) => calls.push(param)).traverse({
-    molecule: [1, 'ab', thirdAtom],
+    molecule: [1, 'ab', 3],
     staticData: undefined,
   })
   assert.deepEqual(calls, [
     { atom: 1, moleculePath: ['0'], staticData: undefined },
     { atom: 2, moleculePath: ['1'], staticData: undefined },
-    { atom: thirdAtom, moleculePath: ['2'], staticData: undefined },
+    { atom: 3, moleculePath: ['2'], staticData: undefined },
   ])
 })
 

@@ -8,7 +8,7 @@ await test('isTraversable rejects null', () => {
 })
 
 await test('isTraversable rejects a primitive', () => {
-  assert.equal(isTraversable('not an object'), false)
+  assert.equal(isTraversable(42), false)
 })
 
 await test('isTraversable accepts a plain object without requireValueAccess', () => {
@@ -16,7 +16,7 @@ await test('isTraversable accepts a plain object without requireValueAccess', ()
 })
 
 await test('isTraversable accepts an array', () => {
-  assert.equal(isTraversable(['a', 'b', 'c']), true)
+  assert.equal(isTraversable([1, 2, 3]), true)
 })
 
 await test('isTraversable with requireValueAccess accepts an object whose properties all read cleanly', () => {
