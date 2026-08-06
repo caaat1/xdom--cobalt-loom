@@ -1,1 +1,1 @@
-export type AtomUnion<T_Atom, T_Shorthand> = T_Atom | T_Shorthand
+export type AtomUnion<T_Atom, T_AtomShorthand> = T_Atom | T_AtomShorthand

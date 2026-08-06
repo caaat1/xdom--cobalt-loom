@@ -6,18 +6,19 @@ import {
 } from '../(molecule)/polyatomic/type.js'
 import type { TypeDescription } from '../type/description/type.js'
 
-export type Molecule<T_Atom, T_Shorthand> =
-  AtomUnion<T_Atom, T_Shorthand> | MoleculePolyatomic<T_Atom, T_Shorthand>
-export function isMolecule<T_Atom, T_Shorthand>(
+export type Molecule<T_Atom, T_AtomShorthand> =
+  | AtomUnion<T_Atom, T_AtomShorthand>
+  | MoleculePolyatomic<T_Atom, T_AtomShorthand>
+export function isMolecule<T_Atom, T_AtomShorthand>(
   molecule: unknown,
   typeGuard: {
     isAtom: (value: unknown) => value is T_Atom
-    isShorthand: (value: unknown) => value is T_Shorthand
+    isAtomShorthand: (value: unknown) => value is T_AtomShorthand
   }
-): molecule is Molecule<T_Atom, T_Shorthand> {
+): molecule is Molecule<T_Atom, T_AtomShorthand> {
   const isValid =
     isAtomUnion(molecule, typeGuard) ||
     isMoleculePolyatomic(molecule, typeGuard)
   return isValid
 }
-export const typeDescription: TypeDescription = `Molecule is either an Atom, a Shorthand for an Atom, a MoleculeArray, or a MoleculeMap.`
+export const typeDescription: TypeDescription = `Molecule is either an Atom, a shorthand for an Atom (AtomShorthand), a MoleculeArray, or a MoleculeMap.`

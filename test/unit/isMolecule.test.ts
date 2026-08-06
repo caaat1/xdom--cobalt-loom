@@ -5,7 +5,8 @@ import { isMolecule } from '../../src/tool/molecule/type.js'
 
 const typeGuard = {
   isAtom: (value: unknown): value is number => typeof value === 'number',
-  isShorthand: (value: unknown): value is string => typeof value === 'string',
+  isAtomShorthand: (value: unknown): value is string =>
+    typeof value === 'string',
 }
 
 await test('isMolecule accepts a bare atom', () => {

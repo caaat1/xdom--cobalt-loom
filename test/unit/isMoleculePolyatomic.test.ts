@@ -5,7 +5,8 @@ import { isMoleculePolyatomic } from '../../src/tool/(molecule)/polyatomic/type.
 
 const typeGuard = {
   isAtom: (value: unknown): value is number => typeof value === 'number',
-  isShorthand: (value: unknown): value is string => typeof value === 'string',
+  isAtomShorthand: (value: unknown): value is string =>
+    typeof value === 'string',
 }
 
 await test('isMoleculePolyatomic accepts an array of valid molecules', () => {

@@ -11,9 +11,9 @@ import type { Molecule } from '../type.js'
 
 import type { HandleMethodParam } from './handle/param/type.js'
 
-export class MoleculeTraverser<T_Atom, T_Shorthand, T_StaticData> {
+export class MoleculeTraverser<T_Atom, T_AtomShorthand, T_StaticData> {
   readonly traverse: <T extends T_StaticData>(param: {
-    molecule: Molecule<T_Atom, T_Shorthand>
+    molecule: Molecule<T_Atom, T_AtomShorthand>
     staticData: T
   }) => void
   readonly #pushMolecule = ({
@@ -21,14 +21,14 @@ export class MoleculeTraverser<T_Atom, T_Shorthand, T_StaticData> {
     moleculePath,
     stack,
   }: {
-    entries: MoleculeEntryArray<T_Atom, T_Shorthand>
+    entries: MoleculeEntryArray<T_Atom, T_AtomShorthand>
     moleculePath: MoleculePath
-    stack: MoleculeBundleArray<T_Atom, T_Shorthand>
+    stack: MoleculeBundleArray<T_Atom, T_AtomShorthand>
   }): void => {
     entries
       .reverse()
       .forEach(
-        ([key, molecule]: MoleculeEntry<T_Atom, T_Shorthand>): number => {
+        ([key, molecule]: MoleculeEntry<T_Atom, T_AtomShorthand>): number => {
           return stack.push({
             molecule,
             moleculePath: [...moleculePath, key],
@@ -45,9 +45,9 @@ export class MoleculeTraverser<T_Atom, T_Shorthand, T_StaticData> {
     expectedType: TypeDescription
     typeGuard: {
       isAtom: (molecule: unknown) => molecule is T_Atom
-      isShorthand: (molecule: unknown) => molecule is T_Shorthand
+      isAtomShorthand: (molecule: unknown) => molecule is T_AtomShorthand
     }
-    castToAtom: (shorthand: T_Shorthand) => T_Atom
+    castToAtom: (atomShorthand: T_AtomShorthand) => T_Atom
     handle: <T extends T_StaticData>(
       param: HandleMethodParam<T_Atom, T>
     ) => void
@@ -56,20 +56,22 @@ export class MoleculeTraverser<T_Atom, T_Shorthand, T_StaticData> {
       molecule,
       staticData,
     }: {
-      molecule: Molecule<T_Atom, T_Shorthand>
+      molecule: Molecule<T_Atom, T_AtomShorthand>
       staticData: T
     }): void => {
-      const stack: MoleculeBundleArray<T_Atom, T_Shorthand> =
+      const stack: MoleculeBundleArray<T_Atom, T_AtomShorthand> =
         new MoleculeBundleArray()
-      let stackItem: MoleculeBundle<T_Atom, T_Shorthand> | undefined = {
+      let stackItem: MoleculeBundle<T_Atom, T_AtomShorthand> | undefined = {
         molecule,
         moleculePath: [],
       }
       do {
-        const { molecule, moleculePath }: MoleculeBundle<T_Atom, T_Shorthand> =
-          stackItem
+        const {
+          molecule,
+          moleculePath,
+        }: MoleculeBundle<T_Atom, T_AtomShorthand> = stackItem
         if (isAtomUnion(molecule, typeGuard)) {
-          const atom: T_Atom = typeGuard.isShorthand(molecule)
+          const atom: T_Atom = typeGuard.isAtomShorthand(molecule)
             ? castToAtom(molecule)
             : molecule
           handle<T>({
@@ -78,7 +80,7 @@ export class MoleculeTraverser<T_Atom, T_Shorthand, T_StaticData> {
             staticData,
           })
         } else if (isMoleculePolyatomic(molecule, typeGuard)) {
-          const entries: MoleculeEntryArray<T_Atom, T_Shorthand> =
+          const entries: MoleculeEntryArray<T_Atom, T_AtomShorthand> =
             Object.entries(molecule)
           this.#pushMolecule({ entries, moleculePath, stack })
         } else {
