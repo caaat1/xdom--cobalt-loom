@@ -1,5 +1,8 @@
-import { FINAL_METHODS, FINAL_STATIC_MEMBERS } from "../../../../class/(member)/final/index.js"
-import { registerFinal } from "../../../../class/(member)/final/register/function.js"
+import {
+  FINAL_METHODS,
+  FINAL_STATIC_MEMBERS,
+} from '../../../../class/(member)/final/index.js'
+import { registerFinal } from '../../../../class/(member)/final/register/function.js'
 
 /**
  * Method decorator that marks a method as final — not to be overridden.

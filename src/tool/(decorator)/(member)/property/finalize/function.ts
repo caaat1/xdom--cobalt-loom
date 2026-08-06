@@ -17,7 +17,7 @@ import { registerFinal } from '../../../../class/(member)/final/register/functio
  * `this.foo = …` assignment pattern, which uses [[Set]] and does consult the
  * chain; an initialized field redeclaration bypasses it.
  */
-export function finalizeField(target: object, propertyKey: string): void {
+export function finalizeProperty(target: object, propertyKey: string): void {
   if (typeof target === 'function') {
     registerFinal(target, FINAL_STATIC_MEMBERS, propertyKey)
   }

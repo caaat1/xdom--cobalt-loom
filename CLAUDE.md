@@ -5,7 +5,7 @@ A TypeScript library of DOM node wrappers.
 ## Commands
 
 - `npm run build` — emit `dist/index.js` + `dist/index.d.ts` via `tsc`
-- `npm run test` — run the unit suite (Node's native `node --test` against `test/unit/**/*.test.ts`)
+- `npm run test` — run the unit suite: `test:unit` (Node's native `node --test` against flat files in `test/unit/*.test.ts`) then `test:unit:decorators` (`tsx --test` against `test/unit/decorator/**/*.test.ts`) — Node's native TypeScript stripping only erases types, it cannot parse decorator syntax at all (confirmed: hard `SyntaxError`, not a semantics gap), so any spec exercising `src/tool/(decorator)` must live under `test/unit/decorator/` and run through `tsx` instead
 - `npm run validate` — type-check + lint + format check + test; must pass before push
 - `npm run lint:src:fix` — lint with autofix over `./src`
 

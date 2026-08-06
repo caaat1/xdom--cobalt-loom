@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { enforceFinal } from '../../src/tool/class/(member)/final/enforce/function.js'
-import { finalizeField } from '../../src/tool/(decorator)/(member)/field/finalize/function.js'
-import { finalizeMethod } from '../../src/tool/(decorator)/(member)/method/finalize/function.js'
+import { finalizeMethod } from '../../../src/tool/(decorator)/(member)/method/finalize/function.js'
+import { finalizeProperty } from '../../../src/tool/(decorator)/(member)/property/finalize/function.js'
+import { enforceFinal } from '../../../src/tool/class/(member)/final/enforce/function.js'
 
 class Base {
-  @finalizeField
+  @finalizeProperty
   static readonly defaultLabel: string = 'base'
   @finalizeMethod
   static create(): Base {
@@ -52,7 +52,7 @@ await test('enforceFinal rejects a subclass shadowing a final static member', ()
   }, /Cannot override final static member 'create'/)
 })
 
-await test('finalizeField freezes the declaring class static slot', () => {
+await test('finalizeProperty freezes the declaring class static slot', () => {
   assert.throws(() => {
     // @ts-expect-error readonly — probing the runtime freeze on the static slot
     Base.defaultLabel = 'mutated'
