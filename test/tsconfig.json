@@ -36,5 +36,5 @@
   // value/type import. The root tsconfig gets this for free (src/types is
   // already under its own "src" include entry); this program needs it
   // spelled out explicitly since it's a separate program from the root's.
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../src/types/**/*.ts"]
 }
