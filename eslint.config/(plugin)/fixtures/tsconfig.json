@@ -1,0 +1,19 @@
+{
+  // Boundary marker for the (plugin)/fixtures tree: a minimal, standalone
+  // program for RuleTester's type-aware runs — deliberately not part of the
+  // root tsconfig's `include` (src/ only) or test/tsconfig.json (test/
+  // only), so these snippets never get pulled into `npm run type-check` /
+  // `type-check:test`, and never need to satisfy either profile's stricter
+  // options (noUncheckedIndexedAccess, exactOptionalPropertyTypes, ...) —
+  // they exist purely as parser/checker input for the rule under test, not
+  // as code this library ships.
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022"
+  },
+  "include": ["**/*.ts"]
+}

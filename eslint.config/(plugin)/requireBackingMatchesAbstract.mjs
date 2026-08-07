@@ -82,7 +82,16 @@ function getBaseClassDecl(checker, classDecl) {
   if (!expr) {
     return null
   }
-  const sym = checker.getSymbolAtLocation(expr)
+  let sym = checker.getSymbolAtLocation(expr)
+  // An ancestor `extends`ed from another module resolves to an import
+  // binding first (declarations: [ImportSpecifier]), not the class itself —
+  // confirmed empirically via a throwaway probe once the RuleTester suite's
+  // cross-file fixtures caught this returning no ancestor at all. Same-file
+  // ancestors (as in the sibling rules' own fixtures) never hit this branch,
+  // which is how it went unnoticed before there were cross-file fixtures.
+  if (sym !== undefined && (sym.flags & ts.SymbolFlags.Alias) !== 0) {
+    sym = checker.getAliasedSymbol(sym)
+  }
   const decl = sym?.declarations?.find(
     (d) => ts.isClassDeclaration(d) || ts.isClassExpression(d)
   )
