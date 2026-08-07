@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { createMdTable, snapshotLabel } from './script.js'
+import { createMdTable, snapshotLabel } from '../script.js'
 
 await test('snapshotLabel formats an ISO-stamped filename as "MM/DD HH:MM"', () => {
   assert.equal(snapshotLabel('2026-08-07T12-42-44.json'), '08/07 12:42')

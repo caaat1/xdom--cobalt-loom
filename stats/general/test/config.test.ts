@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { expandIncludeEntry } from './config.js'
+import { expandIncludeEntry } from '../config.js'
 
 await test('expandIncludeEntry expands a bare directory name to a recursive glob', () => {
   assert.equal(expandIncludeEntry('src'), 'src/**/*')

@@ -114,7 +114,7 @@ const TAB_REOPEN_WINDOW_MS =
 function openInBrowserIfStale(filePath: string): void {
   let lastOpen = 0
   try {
-    lastOpen = Number(readFileSync(LAST_OPEN_MARKER, 'utf-8'))
+    lastOpen = Number(readFileSync(LAST_WINDOW_OPEN_MARKER, 'utf-8'))
   } catch {
     // no marker yet — never opened (or the file was cleaned up)
   }
@@ -126,8 +126,8 @@ function openInBrowserIfStale(filePath: string): void {
     return
   }
   openInBrowser(filePath)
-  mkdirSync(dirname(LAST_OPEN_MARKER), { recursive: true })
-  writeFileSync(LAST_OPEN_MARKER, String(Date.now()))
+  mkdirSync(dirname(LAST_WINDOW_OPEN_MARKER), { recursive: true })
+  writeFileSync(LAST_WINDOW_OPEN_MARKER, String(Date.now()))
 }
 
 // script.ts lives inside its own tool's asset folder now (stats/general/),
@@ -144,7 +144,7 @@ const GRAPH_HTML = join(BASE_DIR, 'graph.html')
 // output for viewing) — and '-' prefixed: git-ignored and tsconfig-excluded
 // by this repo's own scratch convention, since it's runtime state, not a
 // tracked artifact.
-const LAST_OPEN_MARKER = join(BASE_DIR, 'script', '-last-open')
+const LAST_WINDOW_OPEN_MARKER = join(BASE_DIR, 'script', '-last-window-open')
 // stats/<tool>/ always sits two levels under the project root, so this is
 // stable regardless of the invoker's cwd — unlike a bare relative 'src'.
 const PROJECT_ROOT = join(BASE_DIR, '..', '..')

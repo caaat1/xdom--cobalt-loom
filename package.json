@@ -76,7 +76,7 @@
     "stats:general": "tsx stats/general/script.ts",
     "stats:general:collect": "npm run stats:general -- --collect-only",
     "stats:general:render": "npm run stats:general -- --render-only",
-    "stats:general:test": "node --import ./test/setup/register.mjs --test \"stats/general/*.test.ts\"",
+    "stats:general:test": "node --import ./test/setup/register.mjs --test \"stats/general/test/*.test.ts\"",
     "test": "npm run test:unit && npm run test:unit:decorators",
     "test:unit": "node --import ./test/setup/register.mjs --test \"test/unit/**/*.test.ts\"",
     "test:unit:decorators": "cd test && tsx --test \"decorator/**/*.test.ts\"",
