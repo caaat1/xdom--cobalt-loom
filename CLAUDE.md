@@ -5,7 +5,7 @@ A TypeScript library of DOM node wrappers.
 ## Commands
 
 - `npm run build` — emit `dist/index.js` + `dist/index.d.ts` via `tsc`
-- `npm run test` — run the unit suite: `test:unit` (Node's native `node --test` against `test/unit/**/*.test.ts`) then `test:unit:decorators` (`tsx --test` against `test/decorator/**/*.test.ts`) — Node's native TypeScript stripping only erases types, it cannot parse decorator syntax at all (confirmed: hard `SyntaxError`, not a semantics gap), so any spec exercising `src/tool/(decorator)` must live under the sibling `test/decorator/`, outside `test/unit/`'s own recursive glob, and run through `tsx` instead
+- `npm run test` — run the unit suite: `test:unit` (Node's native `node --test` against `test/unit/**/*.test.ts`) then `test:unit:decorators` (`tsx --test` against `test/decorator/**/*.test.ts`) — Node's native TypeScript stripping only erases types, it cannot parse decorator syntax at all (confirmed: hard `SyntaxError`, not a semantics gap). This isn't limited to specs exercising `src/tool/(decorator)` itself: the failure is a parse error on whatever file in the _import graph_ first contains decorator syntax, so any spec that transitively imports a decorated class (e.g. anything under `src/(node)/` using `@backMethod`/`@implementMethod`, not just the decorator module's own tests) must live under `test/decorator/` too — grouped one level deep there the same way `test/unit/` is (e.g. `test/decorator/node/`), outside `test/unit/`'s own recursive glob, and run through `tsx` instead
 - `npm run validate` — type-check + lint + format check + test; must pass before push
 - `npm run lint:src:fix` — lint with autofix over `./src`
 
