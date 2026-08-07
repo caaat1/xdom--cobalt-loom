@@ -1,13 +1,18 @@
 {
-  // <h1> is used deliberately in src/(node)/**/.window*-title.md folder
-  // "banner" files — a class-based CSS selector (see .vscode/style.css,
-  // wired via .vscode/settings.json's markdown.styles) needs a real HTML
-  // element to hang a class attribute off, which a plain `#` markdown
-  // heading can't do. Scoped to just h1, not inline HTML in general, so
-  // this stays a narrow, intentional exception rather than a blanket
-  // relaxation that would also swallow genuinely accidental inline HTML
-  // elsewhere (README.md, CLAUDE.md, ...).
+  // <window-title> is used deliberately in src/(node)/**/.window*-title.md
+  // folder "banner" files — a custom element (see .vscode/style.css, wired
+  // via .vscode/settings.json's markdown.styles), rather than <h1> with a
+  // class: the element name itself is the marker, so the CSS selector
+  // doesn't depend on nobody else ever reusing the same class combination,
+  // and MD033 (below) allowlists exactly one purpose-built tag instead of a
+  // real HTML element that could plausibly show up elsewhere for real
+  // heading reasons. Each banner file also carries its own file-level
+  // <!-- markdownlint-disable-file MD041 --> — MD033's allowlist doesn't
+  // make a custom element count as a heading for MD041's own "first line
+  // should be a top-level heading" check, and there's no per-rule option
+  // for that; these files aren't documents, so MD041 doesn't apply to them
+  // at all.
   "MD033": {
-    "allowed_elements": ["h1"]
+    "allowed_elements": ["window-title"]
   }
 }

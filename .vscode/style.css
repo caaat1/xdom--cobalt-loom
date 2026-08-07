@@ -5,9 +5,9 @@ body {
   text-align: center;
 }
 
-h1.window.title.soft {
-  border-bottom: none;
+window-title {
   color: hsla(120, 100%, 40%, 1);
+  display: block;
   font-size: 250%;
   font-style: normal;
   font-weight: normal;
