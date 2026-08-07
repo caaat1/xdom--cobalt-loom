@@ -2,21 +2,21 @@
 
 ## total
 
-| unit | count |
-| ---- | ----: |
-| byte | 9,455 |
-| line |   285 |
-| file |    32 |
+| unit |  count |
+| ---- | -----: |
+| byte | 94,664 |
+| line |  2,460 |
+| file |    147 |
 
 ## byte
 
 | per  | value |
 | ---- | ----: |
-| line |    33 |
-| file |   295 |
+| line |    38 |
+| file |   644 |
 
 ## line
 
 | per  | value |
 | ---- | ----: |
-| file |     9 |
+| file |    17 |
