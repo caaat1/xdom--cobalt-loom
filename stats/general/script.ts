@@ -6,7 +6,7 @@ import {
   readdirSync,
   writeFileSync,
 } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 import { format, resolveConfig } from 'prettier'
@@ -126,6 +126,7 @@ function openInBrowserIfStale(filePath: string): void {
     return
   }
   openInBrowser(filePath)
+  mkdirSync(dirname(LAST_OPEN_MARKER), { recursive: true })
   writeFileSync(LAST_OPEN_MARKER, String(Date.now()))
 }
 
@@ -138,9 +139,12 @@ const GRAPH_DIR = join(BASE_DIR, 'graph')
 const GRAPH_DATA_JS = join(GRAPH_DIR, 'data.js')
 const LATEST_MD = join(BASE_DIR, 'latest.md')
 const GRAPH_HTML = join(BASE_DIR, 'graph.html')
-// '-' prefix: git-ignored and tsconfig-excluded by this repo's own scratch
-// convention — runtime state, not a tracked artifact.
-const LAST_OPEN_MARKER = join(BASE_DIR, '-last-open')
+// Nested under script/ (this tool's own code + private runtime state) rather
+// than sitting alongside data/, graph/, latest.md (this tool's generated
+// output for viewing) — and '-' prefixed: git-ignored and tsconfig-excluded
+// by this repo's own scratch convention, since it's runtime state, not a
+// tracked artifact.
+const LAST_OPEN_MARKER = join(BASE_DIR, 'script', '-last-open')
 // stats/<tool>/ always sits two levels under the project root, so this is
 // stable regardless of the invoker's cwd — unlike a bare relative 'src'.
 const PROJECT_ROOT = join(BASE_DIR, '..', '..')
