@@ -1,0 +1,32 @@
+body {
+  background: hsla(0, 0%, 10%, 1);
+  margin: 0;
+  padding: 0.15em 0;
+  text-align: center;
+}
+
+h1 {
+  border-bottom: none;
+  color: hsla(120, 100%, 40%, 1);
+  font-size: 250%;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 0.2em;
+  line-height: 0.8;
+  margin: 0;
+  text-shadow: 0 0 2.5em hsla(120, 100%, 27%, 0.67);
+}
+
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+pre,
+code,
+blockquote,
+hr,
+table {
+  display: none;
+}

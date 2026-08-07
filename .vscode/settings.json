@@ -1,4 +1,5 @@
 {
+  "markdown.styles": [".vscode/style/.window/floating/title.css"],
   "workbench.colorCustomizations": {
     "editorGroupHeader.border": "#1a1a1aff",
     "editorGroupHeader.noTabsBackground": "#1a1a1aff",
