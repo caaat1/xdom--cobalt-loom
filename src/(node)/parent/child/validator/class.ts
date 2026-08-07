@@ -2,7 +2,7 @@ import type { NodeBlueprintCtorWide } from '../../../../node/blueprint/ctor/wide
 import { implementMethod } from '../../../../tool/(decorator)/(member)/method/implement/function.js'
 import type { _lf } from '../../../../tool/_lf/interface.js'
 
-import type { NodeParentValidatorCb } from './cb/type.js'
+import type { NodeParentChildValidatorCb } from './cb/type.js'
 
 export class NodeParentChildValidator<
   T_NodeParentBlueprint,
@@ -24,7 +24,7 @@ export class NodeParentChildValidator<
   registerChildAllowed<T_NodeChildBlueprint>(
     childCtor: NodeBlueprintCtorWide<T_NodeChildBlueprint>,
     validator:
-      | NodeParentValidatorCb<T_NodeParentBlueprint, T_NodeChildBlueprint>
+      | NodeParentChildValidatorCb<T_NodeParentBlueprint, T_NodeChildBlueprint>
       | undefined
   ): NodeParentChildValidator<
     T_NodeParentBlueprint,
@@ -57,7 +57,7 @@ export class NodeParentChildValidator<
     if (rawCb === undefined) {
       return true
     }
-    const cb = rawCb as NodeParentValidatorCb<
+    const cb = rawCb as NodeParentChildValidatorCb<
       T_NodeParentBlueprint,
       T_NodeChildBlueprint
     >
