@@ -11,6 +11,7 @@ import unicorn from 'eslint-plugin-unicorn'
 import globals from 'globals'
 
 import { pluginNoVisibilityWidening } from '../(plugin)/noVisibilityWidening.mjs'
+import { pluginRequireBackingMatchesAbstract } from '../(plugin)/requireBackingMatchesAbstract.mjs'
 import { pluginRequireOverrideForAbstract } from '../(plugin)/requireOverrideForAbstract.mjs'
 
 import { findProjectRootDir } from './base/findProjectRootDir.mjs'
@@ -40,6 +41,7 @@ export const basePlugins =
         rules: {
           ...pluginRequireOverrideForAbstract.rules,
           ...pluginNoVisibilityWidening.rules,
+          ...pluginRequireBackingMatchesAbstract.rules,
         },
       },
       promise,
@@ -221,6 +223,7 @@ export const baseRules = {
   // Local custom rules
   'localRules/no-visibility-widening': 'error',
   'localRules/require-override-for-abstract': 'error',
+  'localRules/require-backing-matches-abstract': 'error',
 }
 
 /** @type {import('eslint').Linter.Config} */

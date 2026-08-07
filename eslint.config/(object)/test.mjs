@@ -81,6 +81,16 @@ export const eslintConfigTest = {
         allowConciseArrowFunctionExpressionsStartingWithVoid: false,
       },
     ],
+    // test/decorator/*.test.ts unit-tests enforceBacking's own runtime logic
+    // in isolation, via minimal Base fixtures built to exercise that logic
+    // directly — including ones with no abstract ancestor member at all, and
+    // ones that deliberately shadow a concrete ancestor member to prove
+    // enforceBacking rejects it. This rule is written for src/'s real
+    // @backMethod/@backProperty usage (backing a genuinely abstract ancestor
+    // member); those fixtures were never trying to satisfy that contract, so
+    // applying it here would flag the tests' deliberate anti-pattern cases
+    // rather than a real defect.
+    'localRules/require-backing-matches-abstract': 'off',
   },
   settings: {
     'import-x/resolver': {
