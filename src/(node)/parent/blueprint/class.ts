@@ -1,20 +1,12 @@
-import type { NodeChild } from '../../../(node)/child/type.js'
-import type { NodeParent } from '../../../(node)/parent/type.js'
 import { NodeBlueprint } from '../../../node/blueprint/class.js'
-import type { NodeBundle } from '../../../node/bundle/type.js'
-import type { NodeChildBlueprint } from '../../child/blueprint/type.js'
+import type { NodeChildBundle } from '../../child/bundle/type.js'
+import type { NodeParentBundle } from '../bundle/type.js'
 import { ChildAccumulator } from '../child/accumulator/class.js'
 import type { ChildValidator } from '../child/validator/class.js'
 
 export abstract class NodeParentBlueprint<
-  T_ParentBundle extends NodeBundle<
-    NodeParent,
-    NodeParentBlueprint<T_ParentBundle, T_ChildAllowedBundle>
-  >,
-  T_ChildAllowedBundle extends NodeBundle<
-    NodeChild,
-    NodeChildBlueprint<T_ChildAllowedBundle>
-  >,
+  T_ParentBundle extends NodeParentBundle<T_ParentBundle, T_ChildAllowedBundle>,
+  T_ChildAllowedBundle extends NodeChildBundle<T_ChildAllowedBundle>,
 > extends NodeBlueprint<T_ParentBundle> {
   protected _childAccumulator:
     ChildAccumulator<T_ParentBundle, T_ChildAllowedBundle> | undefined

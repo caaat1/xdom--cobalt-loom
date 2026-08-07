@@ -39,7 +39,6 @@ export abstract class NodeBuilder<
       ...param,
     }
   }
-
   protected abstract build(): NodeBuilt<T_NodeBundle>
   protected abstract createNode(param: DocumentBound): T_NodeBundle[0]
   protected abstract getParamDefault(): T_NodeParamBundle[1][1]

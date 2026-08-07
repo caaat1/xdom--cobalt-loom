@@ -1,3 +1,4 @@
+import { implementMethod } from '../../tool/(decorator)/(member)/method/implement/function.js'
 import type { _lf } from '../../tool/_lf/interface.js'
 import type { MoleculePath } from '../../tool/molecule/path/type.js'
 import type { NodeBlueprint } from '../blueprint/class.js'
@@ -26,7 +27,7 @@ export class NodeBuilt<
     this.nodeBlueprint = nodeBlueprint
   }
   /** @inheritdoc */
-  _lf(): this {
+  @implementMethod('_lf') _lf(): this {
     return this
   }
 }
