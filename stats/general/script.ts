@@ -1,8 +1,17 @@
 import { spawn } from 'node:child_process'
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import {
+  globSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { format, resolveConfig } from 'prettier'
+
+import { expandIncludeEntry, statsConfig } from './config.js'
+import type { StatsConfig } from './config.js'
 
 interface Snapshot {
   total: { byte: number; line: number; file: number }
@@ -119,28 +128,33 @@ const GRAPH_HTML = join(BASE_DIR, 'graph.html')
 const LAST_OPEN_MARKER = join(BASE_DIR, '-last-open')
 // stats/<tool>/ always sits two levels under the project root, so this is
 // stable regardless of the invoker's cwd — unlike a bare relative 'src'.
-const SRC_DIR = join(BASE_DIR, '..', '..', 'src')
+const PROJECT_ROOT = join(BASE_DIR, '..', '..')
 
-function scan(dir: string): { byte: number; line: number; file: number } {
+// Dotfiles/dot-directories are skipped without needing to say so: it's
+// fs.globSync's own default `**` behavior (verified empirically), the same
+// outcome the previous hand-rolled recursive readdirSync walk got from its
+// explicit `entry.name.startsWith('.')` check.
+function scan(config: StatsConfig): {
+  byte: number
+  line: number
+  file: number
+} {
+  const entries = globSync(config.include.map(expandIncludeEntry), {
+    cwd: PROJECT_ROOT,
+    exclude: config.exclude,
+    withFileTypes: true,
+  })
   let byte = 0
   let line = 0
   let file = 0
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name.startsWith('.')) {
+  for (const entry of entries) {
+    if (!entry.isFile()) {
       continue
     }
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) {
-      const sub = scan(path)
-      byte += sub.byte
-      line += sub.line
-      file += sub.file
-    } else if (entry.isFile()) {
-      const content = readFileSync(path)
-      byte += content.byteLength
-      line += content.toString().split('\n').length - 1
-      file += 1
-    }
+    const content = readFileSync(join(entry.parentPath, entry.name))
+    byte += content.byteLength
+    line += content.toString().split('\n').length - 1
+    file += 1
   }
   return { byte, line, file }
 }
@@ -150,7 +164,7 @@ function scan(dir: string): { byte: number; line: number; file: number } {
 // needs to know how those are presented, and running it back-to-back is
 // just "add another data point."
 function collect(): void {
-  const total = scan(SRC_DIR)
+  const total = scan(statsConfig)
   const avg = {
     byte: {
       per: {
