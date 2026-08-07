@@ -4,7 +4,7 @@
     <base href="./graph/" />
     <meta charset="UTF-8" />
     <!-- A left-open tab keeps itself current instead of needing a fresh
-         OS-level open every render() — see script.ts's openInBrowserIfStale. -->
+        OS-level open every render() — see script.ts's openInBrowserIfStale. -->
     <meta http-equiv="refresh" content="60" />
     <title>xDom stats</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
@@ -53,12 +53,13 @@
     </style>
   </head>
   <body>
-    <h1>
-      xDom / src stats — reloaded
-      <script>
-        document.write(new Date().toLocaleTimeString())
-      </script>
-    </h1>
+    <!-- The tab itself refreshes every 60s (see the meta refresh above), but
+        data.js only changes when stats:general actually runs — showing the
+        current wall clock here would read as "current as of now" on every
+        one of those repaints, even the many where nothing new was
+        collected. The last data point's own timestamp is the honest answer
+        to "how fresh is this" — set below, once data.js has loaded. -->
+    <h1>xDom / src stats — as of <span id="asOf">…</span></h1>
     <div class="grid">
       <div class="card wide">
         <h2>FILES · LINES · BYTES</h2>
@@ -74,6 +75,10 @@
       </div>
     </div>
     <script src="data.js"></script>
+    <script>
+      document.getElementById('asOf').textContent =
+        raw.at(-1)?.t ?? 'no data yet'
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
