@@ -1,28 +1,22 @@
-import type { NodeBundle } from '../../../../node/bundle/type.js'
 import { isAmong } from '../../../../tool/unknown/among/is/function.js'
 import { UserInputHandler } from '../../../../tool/user/input/handler/class.js'
-import type { NodeChildBlueprint } from '../../../child/blueprint/type.js'
-import type { NodeChild } from '../../../child/type.js'
-import type { NodeParentBlueprint } from '../../blueprint/class.js'
-import type { NodeParent } from '../../type.js'
-import type { ChildMolecule } from '../molecule/type.js'
+import type { NodeChildBundle } from '../../../child/bundle/type.js'
+import type { NodeParentBundle } from '../../bundle/type.js'
+import type { NodeParentChildMolecule } from '../molecule/type.js'
 
-export class ChildAccumulator<
-  T_ParentBundle extends NodeBundle<
-    NodeParent,
-    NodeParentBlueprint<T_ParentBundle, T_ChildAllowedBundle>
+export class NodeParentChildAccumulator<
+  T_NodeParentBundle extends NodeParentBundle<
+    T_NodeParentBundle,
+    T_NodeChildBundle
   >,
-  T_ChildAllowedBundle extends NodeBundle<
-    NodeChild,
-    NodeChildBlueprint<T_ChildAllowedBundle>
-  >,
+  T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
 > extends UserInputHandler<
-  ChildMolecule<T_ParentBundle, T_ChildAllowedBundle>,
-  T_ParentBundle[1]
+  NodeParentChildMolecule<T_NodeParentBundle, T_NodeChildBundle>,
+  T_NodeParentBundle[1]
 > {
   protected canSetSafely(
     value: unknown
-  ): value is ChildMolecule<T_ParentBundle, T_ChildAllowedBundle> {
+  ): value is NodeParentChildMolecule<T_NodeParentBundle, T_NodeChildBundle> {
     return !isAmong(value, [null, undefined])
   }
 }

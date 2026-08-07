@@ -1,1 +1,1 @@
-export type ChildGroupOptionValue = unknown
+export type NodeParentChildGroupOptionValue = unknown

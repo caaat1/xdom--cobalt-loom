@@ -6,5 +6,8 @@ import type { NodeChildBundle } from '../bundle/type.js'
 
 export type NodeChildBuilder<
   T_ChildBundle extends NodeChildBundle<T_ChildBundle>,
-  T_NodeParamBundle extends NodeParamBundle<NodeParam, NodeParamKeyOptional>,
-> = NodeBuilder<T_ChildBundle, T_NodeParamBundle>
+  T_NodeChildParamBundle extends NodeParamBundle<
+    NodeParam,
+    NodeParamKeyOptional
+  >,
+> = NodeBuilder<T_ChildBundle, T_NodeChildParamBundle>

@@ -1,6 +1,6 @@
-import type { ChildGroupOptionKey } from './key/type.js'
-import type { ChildGroupOptionValue } from './value/type.js'
+import type { NodeParentChildGroupOptionKey } from './key/type.js'
+import type { NodeParentChildGroupOptionValue } from './value/type.js'
 
-export type ChildGroupOption = {
-  [key: ChildGroupOptionKey]: ChildGroupOptionValue
+export type NodeParentChildGroupOption = {
+  [key: NodeParentChildGroupOptionKey]: NodeParentChildGroupOptionValue
 }

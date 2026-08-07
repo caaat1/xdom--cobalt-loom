@@ -1,1 +1,1 @@
-export type ChildGroupOptionKey = string
+export type NodeParentChildGroupOptionKey = string

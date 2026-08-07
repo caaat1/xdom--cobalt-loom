@@ -1,22 +1,16 @@
-import type { NodeBundle } from '../../../../node/bundle/type.js'
-import type { NodeChildBlueprint } from '../../../child/blueprint/type.js'
-import type { NodeChild } from '../../../child/type.js'
-import type { NodeParentBlueprint } from '../../blueprint/class.js'
-import type { NodeParent } from '../../type.js'
-import type { ChildMolecule } from '../molecule/type.js'
+import type { NodeChildBundle } from '../../../child/bundle/type.js'
+import type { NodeParentBundle } from '../../bundle/type.js'
+import type { NodeParentChildMolecule } from '../molecule/type.js'
 
-import type { ChildGroupOption } from './option/type.js'
+import type { NodeParentChildGroupOption } from './option/type.js'
 
-export type ChildGroup<
-  T_ParentBundle extends NodeBundle<
-    NodeParent,
-    NodeParentBlueprint<T_ParentBundle, T_ChildAllowedBundle>
+export type NodeParentChildGroup<
+  T_NodeParentBundle extends NodeParentBundle<
+    T_NodeParentBundle,
+    T_NodeChildBundle
   >,
-  T_ChildAllowedBundle extends NodeBundle<
-    NodeChild,
-    NodeChildBlueprint<T_ChildAllowedBundle>
-  >,
+  T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
 > = {
-  molecule?: ChildMolecule<T_ParentBundle, T_ChildAllowedBundle>
-  option?: ChildGroupOption
+  molecule?: NodeParentChildMolecule<T_NodeParentBundle, T_NodeChildBundle>
+  option?: NodeParentChildGroupOption
 }
