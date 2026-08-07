@@ -1,0 +1,13 @@
+{
+  // <h1> is used deliberately in src/(node)/**/.window*-title.md folder
+  // "banner" files — a class-based CSS selector (see .vscode/style.css,
+  // wired via .vscode/settings.json's markdown.styles) needs a real HTML
+  // element to hang a class attribute off, which a plain `#` markdown
+  // heading can't do. Scoped to just h1, not inline HTML in general, so
+  // this stays a narrow, intentional exception rather than a blanket
+  // relaxation that would also swallow genuinely accidental inline HTML
+  // elsewhere (README.md, CLAUDE.md, ...).
+  "MD033": {
+    "allowed_elements": ["h1"]
+  }
+}
