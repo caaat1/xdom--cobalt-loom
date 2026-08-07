@@ -77,6 +77,34 @@ function openInBrowser(filePath: string): void {
   spawn(command, args, { detached: true, stdio: 'ignore' }).unref()
 }
 
+// A script with no browser process to query has no way to ask "is a tab
+// showing this page still open" — so this is a heuristic, not a fact: skip
+// re-opening if we opened one recently enough that it's probably still
+// sitting there. graph.html's own <meta http-equiv="refresh"> is what
+// actually keeps that tab's content current in the meantime; this just
+// avoids spawning a duplicate. Wrong only when the tab was closed inside
+// the window, in which case the next render() past TAB_REOPEN_WINDOW_MS
+// opens a fresh one anyway.
+const TAB_REOPEN_WINDOW_MS = 30 * 60 * 1000
+
+function openInBrowserIfStale(filePath: string): void {
+  let lastOpen = 0
+  try {
+    lastOpen = Number(readFileSync(LAST_OPEN_MARKER, 'utf-8'))
+  } catch {
+    // no marker yet — never opened (or the file was cleaned up)
+  }
+  const sinceLastOpen = Date.now() - lastOpen
+  if (sinceLastOpen < TAB_REOPEN_WINDOW_MS) {
+    console.info(
+      `Graph tab opened ${Math.round(sinceLastOpen / 1000)}s ago — assuming it's still open and self-refreshing; skipping a new one.`
+    )
+    return
+  }
+  openInBrowser(filePath)
+  writeFileSync(LAST_OPEN_MARKER, String(Date.now()))
+}
+
 // script.ts lives inside its own tool's asset folder now (stats/general/),
 // so that folder *is* import.meta.dirname — no more deriving a sibling
 // asset dir from the script's own filename stem.
@@ -86,6 +114,9 @@ const GRAPH_DIR = join(BASE_DIR, 'graph')
 const GRAPH_DATA_JS = join(GRAPH_DIR, 'data.js')
 const LATEST_MD = join(BASE_DIR, 'latest.md')
 const GRAPH_HTML = join(BASE_DIR, 'graph.html')
+// '-' prefix: git-ignored and tsconfig-excluded by this repo's own scratch
+// convention — runtime state, not a tracked artifact.
+const LAST_OPEN_MARKER = join(BASE_DIR, '-last-open')
 // stats/<tool>/ always sits two levels under the project root, so this is
 // stable regardless of the invoker's cwd — unlike a bare relative 'src'.
 const SRC_DIR = join(BASE_DIR, '..', '..', 'src')
@@ -237,7 +268,7 @@ async function render(): Promise<void> {
   })
   writeFileSync(GRAPH_DATA_JS, formattedGraphData)
 
-  openInBrowser(GRAPH_HTML)
+  openInBrowserIfStale(GRAPH_HTML)
   console.info(
     `Rendered latest.md + graph from ${filenames.length} snapshot(s).`
   )

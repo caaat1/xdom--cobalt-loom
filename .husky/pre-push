@@ -22,3 +22,8 @@ npm run validate || exit 1
 # description + homepage -> About, keywords -> Topics. Non-fatal: metadata
 # sync must never block a push (offline, gh missing, repo not yet on GitHub).
 npm run repo:meta:sync || echo "⚠️ repo metadata sync skipped"
+
+# Collect a fresh src/ snapshot and re-render stats/general/latest.md + the
+# graph (pops graph.html open in the browser). Non-fatal: a stats hiccup
+# must never block a push.
+npm run stats:general || echo "⚠️ stats collection/render skipped"

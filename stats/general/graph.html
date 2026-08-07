@@ -3,6 +3,9 @@
   <head>
     <base href="./graph/" />
     <meta charset="UTF-8" />
+    <!-- A left-open tab keeps itself current instead of needing a fresh
+         OS-level open every render() — see script.ts's openInBrowserIfStale. -->
+    <meta http-equiv="refresh" content="60" />
     <title>xDom stats</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
     <style>
@@ -50,7 +53,12 @@
     </style>
   </head>
   <body>
-    <h1>xDom / src stats</h1>
+    <h1>
+      xDom / src stats — reloaded
+      <script>
+        document.write(new Date().toLocaleTimeString())
+      </script>
+    </h1>
     <div class="grid">
       <div class="card wide">
         <h2>FILES · LINES · BYTES</h2>
