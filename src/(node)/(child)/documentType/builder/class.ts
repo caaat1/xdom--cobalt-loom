@@ -1,13 +1,13 @@
 import { NodeBuilder } from '../../../../node/builder/class.js'
 import { backMethod } from '../../../../tool/(decorator)/(member)/method/back/function.js'
-import type { ChildBuilder } from '../../../child/builder/type.js'
+import type { NodeChildBuilder } from '../../../child/builder/type.js'
 import { DocumentTypeBuilt } from '../built/class.js'
 import type { DocumentTypeBundle } from '../bundle/type.js'
 import type { DocumentTypeParamBundle } from '../param/bundle/type.js'
 
 export class DocumentTypeBuilder
   extends NodeBuilder<DocumentTypeBundle, DocumentTypeParamBundle>
-  implements ChildBuilder<DocumentTypeBundle, DocumentTypeParamBundle>
+  implements NodeChildBuilder<DocumentTypeBundle, DocumentTypeParamBundle>
 {
   @backMethod protected override createNode({
     doc,
