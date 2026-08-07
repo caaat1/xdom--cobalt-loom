@@ -122,7 +122,7 @@ const rule = {
     type: 'problem',
     docs: {
       description:
-        'Statically verify @backMethod/@backProperty: the member must not already exist as a concrete member on an ancestor, and must correspond to an abstract member declared somewhere up the chain — the positive half enforceBacking cannot prove at runtime, since abstract members are fully erased by then.',
+        "Statically verify @backMethod/@backProperty. Instance members: must not already exist as a concrete member on an ancestor, AND must correspond to an abstract member declared somewhere up the chain — the positive half enforceBacking cannot prove at runtime, since abstract members are fully erased by then. Static members: shadow-only, matching enforceBacking's own scope for them — TypeScript rejects `abstract`+`static` together outright (verified: \"'static' modifier cannot be used with 'abstract' modifier\", in either keyword order), so there is no declared-abstract-static concept to check a static member against.",
       recommended: false,
     },
     schema: [],
@@ -216,6 +216,14 @@ const rule = {
                 ancestor: concreteDecl.ancestorName ?? 'an ancestor',
               },
             })
+            continue
+          }
+
+          // Static members stop here: TypeScript has no declared-abstract-
+          // static concept for the shadow check above to have ruled out, so
+          // there is nothing further that's provable — same scope
+          // enforceBacking's own runtime check has for them.
+          if (isStatic) {
             continue
           }
 

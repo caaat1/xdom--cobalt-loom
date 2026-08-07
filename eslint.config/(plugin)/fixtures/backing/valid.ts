@@ -6,6 +6,9 @@ export class ShouldPass extends Base {
   freshMethod(): string {
     return 'fresh'
   }
+  // No relation to Base at all, abstract or concrete — valid regardless,
+  // since a static member can only ever be checked for shadowing a concrete
+  // ancestor (see requireBackingMatchesAbstract.mjs's own comment on why).
   @backMethod
   static freshStatic(): string {
     return 'fresh static'

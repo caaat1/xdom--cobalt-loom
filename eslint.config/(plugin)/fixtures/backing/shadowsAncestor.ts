@@ -2,6 +2,9 @@ import { backMethod } from './support/decorators.js'
 import { Base } from './support/base.js'
 
 export class ShouldFlagInstanceShadow extends Base {
+  freshMethod(): string {
+    return 'ok'
+  }
   @backMethod
   override concreteMethod(): string {
     return 'shadowed'

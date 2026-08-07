@@ -44,7 +44,7 @@ ruleTester.run(
   {
     valid: [
       {
-        name: '@backMethod backs a genuinely abstract instance and static member',
+        name: '@backMethod backs a genuinely abstract instance member; the static member has no ancestor relation at all, which is fine — statics are shadow-checked only',
         code: readFixture('backing/valid.ts'),
         filename: 'backing/valid.ts',
       },
@@ -74,7 +74,7 @@ ruleTester.run(
         ],
       },
       {
-        name: '@backMethod/@backProperty with no abstract ancestor member by that name (instance and static)',
+        name: '@backProperty with no abstract ancestor member by that name — instance only, statics have no such check',
         code: readFixture('backing/noAbstractAncestor.ts'),
         filename: 'backing/noAbstractAncestor.ts',
         errors: [
@@ -82,24 +82,16 @@ ruleTester.run(
             messageId: 'noAbstractAncestor',
             data: { name: 'extra', decorator: 'backProperty' },
           },
-          {
-            messageId: 'noAbstractAncestor',
-            data: { name: 'extraStatic', decorator: 'backMethod' },
-          },
         ],
       },
       {
-        name: '@backMethod on a class with no ancestor at all',
+        name: '@backMethod on a class with no ancestor at all — instance is flagged, the static sibling is not',
         code: readFixture('backing/noAncestorClass.ts'),
         filename: 'backing/noAncestorClass.ts',
         errors: [
           {
             messageId: 'noAbstractAncestor',
             data: { name: 'freshMethod', decorator: 'backMethod' },
-          },
-          {
-            messageId: 'noAbstractAncestor',
-            data: { name: 'freshStatic', decorator: 'backMethod' },
           },
         ],
       },

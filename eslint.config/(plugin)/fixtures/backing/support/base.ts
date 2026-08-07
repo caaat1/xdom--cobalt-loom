@@ -1,11 +1,13 @@
-// Shared ancestor for requireBackingMatchesAbstract.test.mjs's scenarios:
-// one abstract, one concrete member on each of the instance/static sides.
+// Shared ancestor for requireBackingMatchesAbstract.test.mjs's scenarios.
+// No static counterpart to `abstract freshMethod` — TypeScript rejects
+// `abstract`+`static` together outright (verified: "'static' modifier
+// cannot be used with 'abstract' modifier", in either keyword order), so a
+// declared-abstract static member can't exist for a fixture to even declare.
 export abstract class Base {
   abstract freshMethod(): string
   concreteMethod(): string {
     return 'base concrete'
   }
-  static abstract freshStatic(): string
   static concreteStatic(): string {
     return 'base concrete static'
   }
