@@ -23,5 +23,12 @@
     "strict": true,
     "target": "ES2022",
     "types": ["node"]
-  }
+  },
+  // (plugin)/fixtures/ owns its own tsconfig.json boundary (a standalone
+  // program for RuleTester's type-aware rule tests, with its own
+  // experimentalDecorators/lib settings) — without this, jsconfig.json's
+  // implicit "everything under this directory" default (no `include` above)
+  // would sweep those .ts files into THIS project too, type-checking them
+  // against the wrong compiler options entirely.
+  "exclude": ["(plugin)/fixtures"]
 }

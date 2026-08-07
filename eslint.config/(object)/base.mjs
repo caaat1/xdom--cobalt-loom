@@ -33,7 +33,7 @@ const forPluginImportX = deriveForPluginImportX(tsconfigPath)
 // so assert the map shape.
 /** @type {NonNullable<import('eslint').Linter.Config['plugins']>} */
 export const basePlugins =
-  /** @type {import('eslint').Linter.Config['plugins']} */ (
+  /** @type {NonNullable<import('eslint').Linter.Config['plugins']>} */ (
     /** @type {unknown} */ ({
       '@typescript-eslint': typescriptEslint,
       import: importPlugin,
