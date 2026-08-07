@@ -16,4 +16,9 @@ if [ "$delete_only" = true ]; then
 fi
 
 echo "🚀 Running pre-push/production checks..."
-npm run validate
+npm run validate || exit 1
+
+# Sync package.json metadata (single source of truth) to the GitHub repo:
+# description + homepage -> About, keywords -> Topics. Non-fatal: metadata
+# sync must never block a push (offline, gh missing, repo not yet on GitHub).
+npm run repo:meta:sync || echo "⚠️ repo metadata sync skipped"

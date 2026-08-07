@@ -1,0 +1,20 @@
+{
+  // Boundary marker: claims repo/ for the language service, keeping this
+  // dev-only tooling out of the root tsconfig.json's own program (whose
+  // "types": [] hides Node globals from src/'s type surface) — repo/
+  // genuinely needs them, same reasoning as stats/tsconfig.json and
+  // test/tsconfig.json. sync.mjs opts into checking via its own bare
+  // `// @ts-check` pragma rather than a global "checkJs", so "allowJs" is
+  // enough to let it join this program at all. Never built; only ever run
+  // directly via `node`.
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true,
+    "rootDir": ".",
+    "tsBuildInfoFile": "../dist/.tsbuildinfo-repo",
+    "types": ["node"]
+  },
+  "exclude": [],
+  "include": ["**/*.mjs"]
+}
