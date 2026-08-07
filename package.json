@@ -66,6 +66,8 @@
     "lint:src:fix": "npm run lint:src -- --fix",
     "lint:src:fix:no-cache": "npm run lint:src:fix -- --no-cache",
     "lint:src:no-cache": "npm run lint:src -- --no-cache",
+    "lint:stats": "npm run lint -- ./stats",
+    "lint:stats:fix": "npm run lint:stats -- --fix",
     "lint:test": "npm run lint -- ./test",
     "lint:test:fix": "npm run lint:test -- --fix",
     "prepare": "husky",

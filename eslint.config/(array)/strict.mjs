@@ -4,6 +4,10 @@ import {
   eslintConfigSelf,
   eslintConfigSelfTypeAware,
 } from '../(object)/self.mjs'
+import {
+  eslintConfigStats,
+  eslintConfigStatsTests,
+} from '../(object)/stats.mjs'
 import { eslintConfigTest, eslintConfigTestScripts } from '../(object)/test.mjs'
 
 export const eslintConfigStrict = [
@@ -17,4 +21,6 @@ export const eslintConfigStrict = [
   // test/ — always wired, not conditional (see test.mjs's own header).
   eslintConfigTest,
   eslintConfigTestScripts,
+  eslintConfigStats,
+  eslintConfigStatsTests,
 ]

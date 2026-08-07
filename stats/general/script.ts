@@ -8,6 +8,7 @@ import {
 } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+
 import { format, resolveConfig } from 'prettier'
 
 import { expandIncludeEntry, statsConfig } from './config.js'
@@ -29,15 +30,18 @@ interface GraphEntry {
 }
 
 export function snapshotLabel(filename: string): string {
-  const base = filename.slice(0, -5) // strip .json
+  const base = filename.slice(0, -'.json'.length)
   const ti = base.indexOf('T')
-  const d = base.slice(0, ti).split('-')
-  const t = base.slice(ti + 1).split('-')
-  return `${d[1]}/${d[2]} ${t[0]}:${t[1]}`
+  const [, month, day] = base.slice(0, ti).split('-')
+  const [hour, minute] = base.slice(ti + 1).split('-')
+  return `${month}/${day} ${hour}:${minute}`
 }
 
+// Indentation doesn't matter: render() immediately runs this back through
+// Prettier (see its own comment on why), so the exact width JSON.stringify
+// happens to use here is fully discarded either way.
 function generateGraphData(entries: GraphEntry[]): string {
-  return `const raw = ${JSON.stringify(entries, null, 2)}\n`
+  return `const raw = ${JSON.stringify(entries)}\n`
 }
 
 const fmt = (n: number): string => n.toLocaleString('en-US')
@@ -47,14 +51,20 @@ export function createMdTable(
   alignments: ('left' | 'right')[],
   rows: string[][]
 ): string {
-  const cols = headers.map((h, i) => ({
+  const cols = headers.map((h, i): { right: boolean; width: number } => ({
+    // eslint-disable-next-line security/detect-object-injection -- i is this same map's own loop index, not attacker input
     right: alignments[i] === 'right',
-    width: Math.max(h.length, ...rows.map((r) => r[i]?.length ?? 0)),
+    width: Math.max(
+      h.length,
+      // eslint-disable-next-line security/detect-object-injection -- i is this same map's own loop index, not attacker input
+      ...rows.map((r): number => r[i]?.length ?? 0)
+    ),
   }))
   const fmtRow = (cells: string[]): string =>
     '| ' +
     cols
-      .map((col, i) => {
+      .map((col, i): string => {
+        // eslint-disable-next-line security/detect-object-injection -- i is this same map's own loop index, not attacker input
         const cell = cells[i] ?? ''
         return col.right ? cell.padStart(col.width) : cell.padEnd(col.width)
       })
@@ -63,7 +73,7 @@ export function createMdTable(
   const sepRow =
     '| ' +
     cols
-      .map((col) =>
+      .map((col): string =>
         col.right ? '-'.repeat(col.width - 1) + ':' : '-'.repeat(col.width)
       )
       .join(' | ') +
@@ -86,6 +96,9 @@ function openInBrowser(filePath: string): void {
   spawn(command, args, { detached: true, stdio: 'ignore' }).unref()
 }
 
+const MS_PER_SECOND = 1000
+const SECONDS_PER_MINUTE = 60
+
 // A script with no browser process to query has no way to ask "is a tab
 // showing this page still open" — so this is a heuristic, not a fact: skip
 // re-opening if we opened one recently enough that it's probably still
@@ -94,7 +107,9 @@ function openInBrowser(filePath: string): void {
 // avoids spawning a duplicate. Wrong only when the tab was closed inside
 // the window, in which case the next render() past TAB_REOPEN_WINDOW_MS
 // opens a fresh one anyway.
-const TAB_REOPEN_WINDOW_MS = 30 * 60 * 1000
+const REOPEN_WINDOW_MINUTES = 30
+const TAB_REOPEN_WINDOW_MS =
+  REOPEN_WINDOW_MINUTES * SECONDS_PER_MINUTE * MS_PER_SECOND
 
 function openInBrowserIfStale(filePath: string): void {
   let lastOpen = 0
@@ -106,7 +121,7 @@ function openInBrowserIfStale(filePath: string): void {
   const sinceLastOpen = Date.now() - lastOpen
   if (sinceLastOpen < TAB_REOPEN_WINDOW_MS) {
     console.info(
-      `Graph tab opened ${Math.round(sinceLastOpen / 1000)}s ago — assuming it's still open and self-refreshing; skipping a new one.`
+      `Graph tab opened ${Math.round(sinceLastOpen / MS_PER_SECOND)}s ago — assuming it's still open and self-refreshing; skipping a new one.`
     )
     return
   }
@@ -179,10 +194,23 @@ function collect(): void {
     },
   }
   mkdirSync(DATA_DIR, { recursive: true })
-  const timestamp = new Date().toISOString().slice(0, 19).replaceAll(':', '-')
+  // Drops the milliseconds + 'Z' toISOString() appends, leaving exactly
+  // 'YYYY-MM-DDTHH:mm:ss' — computed from that literal rather than a bare
+  // 19, so the slice length stays visibly tied to what it's actually
+  // keeping.
+  const isoSecondsLength = 'YYYY-MM-DDTHH:mm:ss'.length
+  const timestamp = new Date()
+    .toISOString()
+    .slice(0, isoSecondsLength)
+    .replaceAll(':', '-')
+  const PRETTY_PRINT_INDENT = 2 // human-reviewable snapshot file, unlike graph/data.js this is never reformatted afterward
   writeFileSync(
     `${DATA_DIR}/${timestamp}.json`,
-    JSON.stringify({ total, byte: avg.byte, line: avg.line }, null, 2) + '\n'
+    JSON.stringify(
+      { total, byte: avg.byte, line: avg.line },
+      null,
+      PRETTY_PRINT_INDENT
+    ) + '\n'
   )
   console.info(`xDom stat`)
   console.info(
@@ -205,7 +233,7 @@ function collect(): void {
 // process or days ago.
 async function render(): Promise<void> {
   const filenames = readdirSync(DATA_DIR)
-    .filter((f) => f.endsWith('.json'))
+    .filter((f): boolean => f.endsWith('.json'))
     .sort()
   if (filenames.length === 0) {
     console.warn(
@@ -213,14 +241,16 @@ async function render(): Promise<void> {
     )
     return
   }
-  const snapshots = filenames.map((filename) => ({
-    filename,
-    snap: JSON.parse(
-      readFileSync(join(DATA_DIR, filename), 'utf-8')
-    ) as Snapshot,
-  }))
+  const snapshots = filenames.map(
+    (filename): { filename: string; snap: Snapshot } => ({
+      filename,
+      snap: JSON.parse(
+        readFileSync(join(DATA_DIR, filename), 'utf-8')
+      ) as Snapshot,
+    })
+  )
   const last = snapshots[snapshots.length - 1]
-  if (!last) {
+  if (last === undefined) {
     return // unreachable given the length check above; satisfies noUncheckedIndexedAccess
   }
   const { snap: latest } = last
@@ -288,8 +318,12 @@ async function render(): Promise<void> {
   )
 }
 
+// process.argv is [node executable, this script's path, ...actual args] —
+// the standard Node CLI idiom for dropping the first two to get argv proper.
+const ARGV_SCRIPT_OFFSET = 2
+
 async function main(): Promise<void> {
-  const args = process.argv.slice(2)
+  const args = process.argv.slice(ARGV_SCRIPT_OFFSET)
   const collectOnly = args.includes('--collect-only')
   const renderOnly = args.includes('--render-only')
   if (collectOnly && renderOnly) {
