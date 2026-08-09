@@ -73,6 +73,8 @@
     "prepare": "husky",
     "repo:meta:sync": "node repo/meta/sync.mjs",
     "repo:meta:test": "node --test \"repo/meta/sync.test.mjs\"",
+    "repo:window-title:sync": "node repo/window-title/sync.mjs",
+    "repo:window-title:test": "node --test \"repo/window-title/sync.test.mjs\"",
     "stats:general": "tsx stats/general/script.ts",
     "stats:general:collect": "npm run stats:general -- --collect-only",
     "stats:general:render": "npm run stats:general -- --render-only",
