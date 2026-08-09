@@ -13,8 +13,8 @@ import globals from 'globals'
 import { pluginNoVisibilityWidening } from '../(plugin)/noVisibilityWidening.mjs'
 import { pluginRequireBackingMatchesAbstract } from '../(plugin)/requireBackingMatchesAbstract.mjs'
 import { pluginRequireOverrideForAbstract } from '../(plugin)/requireOverrideForAbstract.mjs'
+import { findProjectRootDir } from '../../repo/findProjectRootDir.mjs'
 
-import { findProjectRootDir } from './base/findProjectRootDir.mjs'
 import { deriveForPluginImportX } from './forPluginImportX/derive.mjs'
 
 const rootDir = findProjectRootDir(import.meta.dirname)

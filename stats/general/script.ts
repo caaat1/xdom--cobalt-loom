@@ -11,6 +11,8 @@ import { pathToFileURL } from 'node:url'
 
 import { format, resolveConfig } from 'prettier'
 
+import { findProjectRootDir } from '../../repo/findProjectRootDir.mjs'
+
 import { expandIncludeEntry, statsConfig } from './config.js'
 import type { StatsConfig } from './config.js'
 
@@ -145,9 +147,10 @@ const GRAPH_HTML = join(BASE_DIR, 'graph.html')
 // by this repo's own scratch convention, since it's runtime state, not a
 // tracked artifact.
 const LAST_WINDOW_OPEN_MARKER = join(BASE_DIR, 'script', '-last-window-open')
-// stats/<tool>/ always sits two levels under the project root, so this is
-// stable regardless of the invoker's cwd — unlike a bare relative 'src'.
-const PROJECT_ROOT = join(BASE_DIR, '..', '..')
+// Marker-based (nearest ancestor package.json) rather than a hand-counted
+// '..', '..' — stable regardless of the invoker's cwd *and* of how deep
+// this tool's own folder sits under the project root.
+const PROJECT_ROOT = findProjectRootDir(BASE_DIR)
 
 // Dotfiles/dot-directories are skipped without needing to say so: it's
 // fs.globSync's own default `**` behavior (verified empirically), the same

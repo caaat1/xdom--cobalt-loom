@@ -12,10 +12,14 @@
 // allowed to silently lie.
 import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
+import { findProjectRootDir } from '../findProjectRootDir.mjs'
+
+const projectRootDir = findProjectRootDir(import.meta.dirname)
 const { description, homepage, keywords, repository } = JSON.parse(
-  readFileSync(new URL('../../package.json', import.meta.url), 'utf8')
+  readFileSync(resolve(projectRootDir, 'package.json'), 'utf8')
 )
 
 // hook environments may lack gh on PATH; Windows installer's default location

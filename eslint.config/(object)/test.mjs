@@ -6,7 +6,8 @@ import tsParser from '@typescript-eslint/parser'
 import importPlugin from 'eslint-plugin-import-x'
 import globals from 'globals'
 
-import { findProjectRootDir } from './base/findProjectRootDir.mjs'
+import { findProjectRootDir } from '../../repo/findProjectRootDir.mjs'
+
 import { baseRules, basePlugins } from './base.mjs'
 import { deriveForPluginImportX } from './forPluginImportX/derive.mjs'
 

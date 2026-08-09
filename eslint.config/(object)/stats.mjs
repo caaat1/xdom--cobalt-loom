@@ -4,7 +4,8 @@ import { resolve } from 'node:path'
 import tsParser from '@typescript-eslint/parser'
 import globals from 'globals'
 
-import { findProjectRootDir } from './base/findProjectRootDir.mjs'
+import { findProjectRootDir } from '../../repo/findProjectRootDir.mjs'
+
 import { baseRules, basePlugins } from './base.mjs'
 
 const rootDir = findProjectRootDir(import.meta.dirname)

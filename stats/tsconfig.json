@@ -6,8 +6,15 @@
   // (general.ts runs directly via `tsx`), so it only needs to type-check.
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    // script.ts imports repo/findProjectRootDir.mjs (plain JS, no .d.mts) —
+    // needed to let this program load it for type info at all.
+    "allowJs": true,
     "noEmit": true,
-    "rootDir": ".",
+    // ".." (project root), not "." (stats/) — script.ts's import of
+    // repo/findProjectRootDir.mjs pulls a file outside stats/ into this
+    // program; same TS6059 fix as test/tsconfig.json's own rootDir override,
+    // same reason (a file this program includes lives outside its own dir).
+    "rootDir": "..",
     "tsBuildInfoFile": "../dist/.tsbuildinfo-stats",
     "types": ["node"]
   },
