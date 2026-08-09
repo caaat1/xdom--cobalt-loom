@@ -5,19 +5,22 @@ import type { NodeParentChildValidator } from '../../child/validator/class.js'
 
 // TODO: adjust the shape (order of the members) to suit the client code structure
 export type NodeParentBuilderBundle<
-  T_ParentBundle extends NodeParentBundle<T_ParentBundle, T_ChildAllowedBundle>,
-  T_ChildAllowedBundle extends NodeChildBundle<T_ChildAllowedBundle>,
+  T_NodeParentBundle extends NodeParentBundle<
+    T_NodeParentBundle,
+    T_NodeChildBundle
+  >,
+  T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
 > = [
-  parent: [bundle: T_ParentBundle],
-  childAllowed: [
-    bundle: T_ChildAllowedBundle,
+  parent: [bundle: T_NodeParentBundle],
+  child: [
+    bundle: T_NodeChildBundle,
     accumulator: NodeParentChildAccumulator<
-      T_ParentBundle,
-      T_ChildAllowedBundle
+      T_NodeParentBundle,
+      T_NodeChildBundle
     >,
     validator: NodeParentChildValidator<
-      T_ParentBundle[1],
-      T_ChildAllowedBundle[1]
+      T_NodeParentBundle[1],
+      T_NodeChildBundle[1]
     >,
   ],
 ]

@@ -24,7 +24,7 @@ export abstract class NodeParentBlueprint<
       T_NodeChildBundle
     >({ owner: this }))
   }
-  abstract readonly childValidator: NodeParentChildValidator<
+  abstract readonly nodeParentChildValidator: NodeParentChildValidator<
     T_NodeParentBundle[1],
     T_NodeChildBundle[1]
   >

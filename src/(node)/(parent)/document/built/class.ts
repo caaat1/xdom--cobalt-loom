@@ -1,9 +1,8 @@
 import type { DocumentTypeBlueprint } from '../../../(child)/documentType/blueprint/class.js'
-import type { NodeParentBundle } from '../../../parent/bundle/type.js'
+import { NodeParentBuilt } from '../../../parent/built/class.js'
 import type { DocumentBlueprint } from '../blueprint/class.js'
 
-export type DocumentBundle = NodeParentBundle<
+export class DocumentBuilt extends NodeParentBuilt<
   [Document, DocumentBlueprint],
   [DocumentType, DocumentTypeBlueprint]
-  // | [HTMLHtmlElement, ElementStandardNormalHtml]
->
+> {}

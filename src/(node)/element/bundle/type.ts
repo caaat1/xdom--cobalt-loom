@@ -3,5 +3,5 @@ import type { NodeElementBlueprint } from '../blueprint/type.js'
 import type { NodeElement } from '../type.js'
 
 export type NodeElementBundle<
-  T_ElementBundle extends NodeElementBundle<T_ElementBundle>,
-> = NodeBundle<NodeElement, NodeElementBlueprint<T_ElementBundle>>
+  T_NodeElementBundle extends NodeElementBundle<T_NodeElementBundle>,
+> = NodeBundle<NodeElement, NodeElementBlueprint<T_NodeElementBundle>>

@@ -1,13 +1,13 @@
 import type { NodeBuilder } from '../../../node/builder/class.js'
-import type { NodeParamKeyOptional } from '../../../node/param/(key)/optional/type.js'
+import type { NodeParamKeyPartial } from '../../../node/param/(key)/partial/type.js'
 import type { NodeParamBundle } from '../../../node/param/bundle/type.js'
 import type { NodeParam } from '../../../node/param/type.js'
 import type { NodeChildBundle } from '../bundle/type.js'
 
 export type NodeChildBuilder<
-  T_ChildBundle extends NodeChildBundle<T_ChildBundle>,
+  T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
   T_NodeChildParamBundle extends NodeParamBundle<
     NodeParam,
-    NodeParamKeyOptional
+    NodeParamKeyPartial
   >,
-> = NodeBuilder<T_ChildBundle, T_NodeChildParamBundle>
+> = NodeBuilder<T_NodeChildBundle, T_NodeChildParamBundle>
