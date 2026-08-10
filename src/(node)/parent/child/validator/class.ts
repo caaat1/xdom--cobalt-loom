@@ -18,7 +18,7 @@ export class NodeParentChildValidator<
    * lower-bound-only check (superset registrations allowed), change the
    * return type back to `void`.
    */
-  declare protected readonly _getInvariant: (
+  declare protected readonly _getInvariantPhantom: (
     _: T_NodeChildBlueprintAccumulator
   ) => T_NodeChildBlueprintAccumulator
   // Keyed by the exact child ctor passed to registerChildAllowed -- lookup in
@@ -42,7 +42,7 @@ export class NodeParentChildValidator<
     // previous cb (last write wins) -- Map.set semantics, not additive.
     this.childCtorToCb.set(childCtor, cb)
     // `ReturnType<typeof this.registerChildAllowed>` cannot be used here: the
-    // invariant phantom (_getInvariant) causes TS to resolve the unbound
+    // invariant phantom (_getInvariantPhantom) causes TS to resolve the unbound
     // method-level T_NodeChildBlueprint to `unknown`, yielding
     // NodeParentChildValidator<P, Acc | unknown> =
     // NodeParentChildValidator<P, unknown>, which fails the invariant check

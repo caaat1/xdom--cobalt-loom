@@ -11,9 +11,10 @@ export class DocumentBlueprint extends NodeParentBlueprint<
   [Comment, CommentBlueprint] | [DocumentType, DocumentTypeBlueprint]
 > {
   @backProperty
-  protected override readonly nodeParentChildAllowed = this._lf()
-    .registerChildAllowed(CommentBlueprint, undefined)
-    .registerChildAllowed(DocumentTypeBlueprint, undefined)
+  protected override readonly _nodeParentChildAllowed =
+    this.nodeParentChildValidator
+      .registerChildAllowed(CommentBlueprint, undefined)
+      .registerChildAllowed(DocumentTypeBlueprint, undefined)
   @backMethod override getBuilder({
     docSource,
     moleculePath,
