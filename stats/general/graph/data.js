@@ -1,12 +1,5 @@
 const raw = [
-  {
-    t: '07/31 15:35',
-    files: 32,
-    lines: 285,
-    bytes: 9455,
-    bpf: 295,
-    lpf: 9,
-  },
+  { t: '07/31 15:35', files: 32, lines: 285, bytes: 9455, bpf: 295, lpf: 9 },
   {
     t: '08/07 12:33',
     files: 147,
@@ -30,5 +23,29 @@ const raw = [
     bytes: 92950,
     bpf: 600,
     lpf: 15,
+  },
+  {
+    t: '08/07 18:04',
+    files: 155,
+    lines: 2399,
+    bytes: 92963,
+    bpf: 600,
+    lpf: 15,
+  },
+  {
+    t: '08/07 18:17',
+    files: 155,
+    lines: 2399,
+    bytes: 92963,
+    bpf: 600,
+    lpf: 15,
+  },
+  {
+    t: '08/10 11:51',
+    files: 169,
+    lines: 2655,
+    bytes: 102727,
+    bpf: 608,
+    lpf: 16,
   },
 ]
