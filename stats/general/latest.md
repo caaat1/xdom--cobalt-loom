@@ -4,8 +4,8 @@
 
 | unit |   count |
 | ---- | ------: |
-| byte | 102,727 |
-| line |   2,655 |
+| byte | 103,180 |
+| line |   2,666 |
 | file |     169 |
 
 ## byte
@@ -13,7 +13,7 @@
 | per  | value |
 | ---- | ----: |
 | line |    39 |
-| file |   608 |
+| file |   611 |
 
 ## line
 
