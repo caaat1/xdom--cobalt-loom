@@ -6,7 +6,7 @@ import { UserInputHandler } from '../../../src/tool/user/input/handler/class.js'
 import { UserInputHandlerError } from '../../../src/tool/user/input/handler/error.js'
 
 class StringHandler extends UserInputHandler<string> {
-  protected canSetSafely(value: unknown): value is string {
+  protected override canSetSafely(value: unknown): value is string {
     return typeof value === 'string'
   }
   get value(): string | undefined {
@@ -15,7 +15,7 @@ class StringHandler extends UserInputHandler<string> {
 }
 
 class NumberHandler extends UserInputHandler<number> {
-  protected canSetSafely(value: unknown): value is number {
+  protected override canSetSafely(value: unknown): value is number {
     return typeof value === 'number'
   }
   get value(): number | undefined {
@@ -29,7 +29,7 @@ class NameHandler extends UserInputHandlerIntermediate<{
 }> {
   readonly first = new StringHandler({ owner: undefined })
   readonly last = new StringHandler({ owner: undefined })
-  protected child = { first: this.first, last: this.last }
+  protected override child = { first: this.first, last: this.last }
 }
 
 class FormHandler extends UserInputHandlerIntermediate<{
@@ -38,7 +38,7 @@ class FormHandler extends UserInputHandlerIntermediate<{
 }> {
   readonly name = new NameHandler({ owner: undefined })
   readonly age = new NumberHandler({ owner: undefined })
-  protected child = { name: this.name, age: this.age }
+  protected override child = { name: this.name, age: this.age }
 }
 
 await test('a leaf handler accepts a value matching its own type guard', () => {
@@ -58,7 +58,7 @@ await test('a leaf handler throws UserInputHandlerError when its type guard reje
 
 await test('a subclass can override onRejected with a custom message', () => {
   class LoudHandler extends UserInputHandler<string> {
-    protected canSetSafely(value: unknown): value is string {
+    protected override canSetSafely(value: unknown): value is string {
       return typeof value === 'string'
     }
     protected override onRejected = (param: {

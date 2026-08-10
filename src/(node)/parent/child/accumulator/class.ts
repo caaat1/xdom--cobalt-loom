@@ -14,7 +14,7 @@ export class NodeParentChildAccumulator<
   NodeParentChildMolecule<T_NodeParentBundle, T_NodeChildBundle>,
   T_NodeParentBundle[1]
 > {
-  protected canSetSafely(
+  protected override canSetSafely(
     value: unknown
   ): value is NodeParentChildMolecule<T_NodeParentBundle, T_NodeChildBundle> {
     return !isAmong(value, [null, undefined])

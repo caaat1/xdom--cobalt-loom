@@ -26,7 +26,8 @@ const rule = {
     schema: [],
   },
   create(context) {
-    const parserServices = context.parserServices
+    const parserServices =
+      context.parserServices ?? context.sourceCode.parserServices
     if (!parserServices || !parserServices.program) {
       return {}
     }
