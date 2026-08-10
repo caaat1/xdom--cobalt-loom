@@ -17,7 +17,7 @@ export class NodeParentChildValidator<
    * back to a lower-bound-only check (superset registrations allowed), change
    * the return type back to `void`.
    */
-  declare protected readonly _childAllowed: (
+  declare protected readonly _getInvariant: (
     _: T_NodeChildBlueprintAccumulator
   ) => T_NodeChildBlueprintAccumulator
   private readonly map = new Map<NodeBlueprintCtorWide<unknown>, unknown>()
@@ -32,7 +32,7 @@ export class NodeParentChildValidator<
   > {
     this.map.set(childCtor, validator)
     // `ReturnType<typeof this.registerChildAllowed>` cannot be used here: the
-    // invariant phantom (_childAllowed) causes TS to resolve the unbound
+    // invariant phantom (_getInvariant) causes TS to resolve the unbound
     // method-level T_NodeChildBlueprint to `unknown`, yielding
     // ChildValidator<P, Acc | unknown> = ChildValidator<P, unknown>, which
     // fails the invariant check against the declared return type.

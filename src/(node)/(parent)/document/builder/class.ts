@@ -1,3 +1,4 @@
+import type { CommentBlueprint } from '../../../(child)/(characterData)/comment/blueprint/class.js'
 import type { DocumentTypeBlueprint } from '../../../(child)/documentType/blueprint/class.js'
 import { backMethod } from '../../../../tool/(decorator)/(member)/method/back/function.js'
 import { NodeParentBuilder } from '../../../parent/builder/class.js'
@@ -7,7 +8,7 @@ import type { DocumentParamBundle } from '../param/bundle/type.js'
 
 export class DocumentBuilder extends NodeParentBuilder<
   [Document, DocumentBlueprint],
-  [DocumentType, DocumentTypeBlueprint],
+  [Comment, CommentBlueprint] | [DocumentType, DocumentTypeBlueprint],
   DocumentParamBundle
 > {
   @backMethod protected override createNode({

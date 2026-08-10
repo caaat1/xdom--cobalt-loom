@@ -1,3 +1,4 @@
+import { CommentBlueprint } from '../../../(child)/(characterData)/comment/blueprint/class.js'
 import { DocumentTypeBlueprint } from '../../../(child)/documentType/blueprint/class.js'
 import { backMethod } from '../../../../tool/(decorator)/(member)/method/back/function.js'
 import { backProperty } from '../../../../tool/(decorator)/(member)/property/back/function.js'
@@ -8,20 +9,20 @@ import { DocumentBuilder } from '../builder/class.js'
 
 export class DocumentBlueprint extends NodeParentBlueprint<
   [Document, DocumentBlueprint],
-  [DocumentType, DocumentTypeBlueprint]
+  [Comment, CommentBlueprint] | [DocumentType, DocumentTypeBlueprint]
 > {
   private static _childValidator: NodeParentChildValidator<
     DocumentBlueprint,
-    DocumentTypeBlueprint
+    CommentBlueprint | DocumentTypeBlueprint
   >
   @backProperty
   override readonly nodeParentChildValidator: NodeParentChildValidator<
     DocumentBlueprint,
-    DocumentTypeBlueprint
+    CommentBlueprint | DocumentTypeBlueprint
   > = (DocumentBlueprint._childValidator ??=
     new NodeParentChildValidator<DocumentBlueprint>()
+      .registerChildAllowed(CommentBlueprint, undefined)
       .registerChildAllowed(DocumentTypeBlueprint, undefined)
-      // .registerChildAllowed(CommentBlueprint, undefined)
       ._lf())
   @backMethod override getBuilder({
     docSource,
