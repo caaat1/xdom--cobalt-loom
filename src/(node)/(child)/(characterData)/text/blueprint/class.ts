@@ -4,10 +4,9 @@ import type { MoleculePath } from '../../../../../tool/molecule/path/type.js'
 import { CharacterDataBlueprint } from '../../../characterData/blueprint/class.js'
 import type { CharacterDataParam } from '../../../characterData/param/type.js'
 import { TextBuilder } from '../builder/class.js'
+import type { TextBundle } from '../bundle/type.js'
 
-export class TextBlueprint extends CharacterDataBlueprint<
-  [Text, TextBlueprint]
-> {
+export class TextBlueprint extends CharacterDataBlueprint<TextBundle> {
   @backMethod override getBuilder({
     docSource,
     moleculePath,

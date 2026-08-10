@@ -1,6 +1,4 @@
 import { CharacterDataBuilt } from '../../../characterData/built/class.js'
-import type { CommentBlueprint } from '../blueprint/class.js'
+import type { CommentBundle } from '../bundle/type.js'
 
-export class CommentBuilt extends CharacterDataBuilt<
-  [Comment, CommentBlueprint]
-> {}
+export class CommentBuilt extends CharacterDataBuilt<CommentBundle> {}

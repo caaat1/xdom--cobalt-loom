@@ -4,10 +4,9 @@ import type { MoleculePath } from '../../../../../tool/molecule/path/type.js'
 import { CharacterDataBlueprint } from '../../../characterData/blueprint/class.js'
 import type { CharacterDataParam } from '../../../characterData/param/type.js'
 import { CommentBuilder } from '../builder/class.js'
+import type { CommentBundle } from '../bundle/type.js'
 
-export class CommentBlueprint extends CharacterDataBlueprint<
-  [Comment, CommentBlueprint]
-> {
+export class CommentBlueprint extends CharacterDataBlueprint<CommentBundle> {
   @backMethod override getBuilder({
     docSource,
     moleculePath,

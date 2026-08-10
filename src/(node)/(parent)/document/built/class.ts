@@ -1,9 +1,9 @@
-import type { CommentBlueprint } from '../../../(child)/(characterData)/comment/blueprint/class.js'
-import type { DocumentTypeBlueprint } from '../../../(child)/documentType/blueprint/class.js'
+import type { CommentBundle } from '../../../(child)/(characterData)/comment/bundle/type.js'
+import type { DocumentTypeBundle } from '../../../(child)/documentType/bundle/type.js'
 import { NodeParentBuilt } from '../../../parent/built/class.js'
-import type { DocumentBlueprint } from '../blueprint/class.js'
+import type { DocumentBundle } from '../bundle/type.js'
 
 export class DocumentBuilt extends NodeParentBuilt<
-  [Document, DocumentBlueprint],
-  [Comment, CommentBlueprint] | [DocumentType, DocumentTypeBlueprint]
+  DocumentBundle,
+  CommentBundle | DocumentTypeBundle
 > {}

@@ -1,11 +1,9 @@
 import { backMethod } from '../../../../../tool/(decorator)/(member)/method/back/function.js'
 import { CharacterDataBuilder } from '../../../characterData/builder/class.js'
-import type { CommentBlueprint } from '../blueprint/class.js'
 import { CommentBuilt } from '../built/class.js'
+import type { CommentBundle } from '../bundle/type.js'
 
-export class CommentBuilder extends CharacterDataBuilder<
-  [Comment, CommentBlueprint]
-> {
+export class CommentBuilder extends CharacterDataBuilder<CommentBundle> {
   @backMethod protected override getFactory(
     doc: Document
   ): (data: string) => Comment {

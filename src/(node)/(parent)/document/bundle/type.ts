@@ -1,10 +1,12 @@
-import type { CommentBlueprint } from '../../../(child)/(characterData)/comment/blueprint/class.js'
-import type { DocumentTypeBlueprint } from '../../../(child)/documentType/blueprint/class.js'
+import type { CommentBundle } from '../../../(child)/(characterData)/comment/bundle/type.js'
+import type { DocumentTypeBundle } from '../../../(child)/documentType/bundle/type.js'
+import type { NodeBundle } from '../../../../node/bundle/type.js'
 import type { NodeParentBundle } from '../../../parent/bundle/type.js'
 import type { DocumentBlueprint } from '../blueprint/class.js'
 
-export type DocumentBundle = NodeParentBundle<
-  [Document, DocumentBlueprint],
-  [Comment, CommentBlueprint] | [DocumentType, DocumentTypeBlueprint]
+export type DocumentBundle = NodeBundle<Document, DocumentBlueprint>
+export type DocumentParentBundle = NodeParentBundle<
+  DocumentBundle,
+  CommentBundle | DocumentTypeBundle
   // | [HTMLHtmlElement, ElementStandardNormalHtml]
 >

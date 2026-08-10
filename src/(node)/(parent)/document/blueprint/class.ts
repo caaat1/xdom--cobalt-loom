@@ -1,14 +1,17 @@
 import { CommentBlueprint } from '../../../(child)/(characterData)/comment/blueprint/class.js'
+import type { CommentBundle } from '../../../(child)/(characterData)/comment/bundle/type.js'
 import { DocumentTypeBlueprint } from '../../../(child)/documentType/blueprint/class.js'
+import type { DocumentTypeBundle } from '../../../(child)/documentType/bundle/type.js'
 import { backMethod } from '../../../../tool/(decorator)/(member)/method/back/function.js'
 import { backProperty } from '../../../../tool/(decorator)/(member)/property/back/function.js'
 import type { MoleculePath } from '../../../../tool/molecule/path/type.js'
 import { NodeParentBlueprint } from '../../../parent/blueprint/class.js'
 import { DocumentBuilder } from '../builder/class.js'
+import type { DocumentBundle } from '../bundle/type.js'
 
 export class DocumentBlueprint extends NodeParentBlueprint<
-  [Document, DocumentBlueprint],
-  [Comment, CommentBlueprint] | [DocumentType, DocumentTypeBlueprint]
+  DocumentBundle,
+  CommentBundle | DocumentTypeBundle
 > {
   @backProperty
   protected override readonly _nodeParentChildAllowed =

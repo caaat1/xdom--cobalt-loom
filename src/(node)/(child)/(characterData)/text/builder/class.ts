@@ -1,9 +1,9 @@
 import { backMethod } from '../../../../../tool/(decorator)/(member)/method/back/function.js'
 import { CharacterDataBuilder } from '../../../characterData/builder/class.js'
-import type { TextBlueprint } from '../blueprint/class.js'
 import { TextBuilt } from '../built/class.js'
+import type { TextBundle } from '../bundle/type.js'
 
-export class TextBuilder extends CharacterDataBuilder<[Text, TextBlueprint]> {
+export class TextBuilder extends CharacterDataBuilder<TextBundle> {
   @backMethod protected override getFactory(
     doc: Document
   ): (data: string) => Text {
