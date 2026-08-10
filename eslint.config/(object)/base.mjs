@@ -10,6 +10,7 @@ import security from 'eslint-plugin-security'
 import unicorn from 'eslint-plugin-unicorn'
 import globals from 'globals'
 
+import { pluginNoReadonlyWidening } from '../(plugin)/noReadonlyWidening.mjs'
 import { pluginNoVisibilityWidening } from '../(plugin)/noVisibilityWidening.mjs'
 import { pluginRequireBackingMatchesAbstract } from '../(plugin)/requireBackingMatchesAbstract.mjs'
 import { pluginRequireOverrideForAbstract } from '../(plugin)/requireOverrideForAbstract.mjs'
@@ -42,6 +43,7 @@ export const basePlugins =
           ...pluginRequireOverrideForAbstract.rules,
           ...pluginNoVisibilityWidening.rules,
           ...pluginRequireBackingMatchesAbstract.rules,
+          ...pluginNoReadonlyWidening.rules,
         },
       },
       promise,
@@ -224,6 +226,7 @@ export const baseRules = {
   'localRules/no-visibility-widening': 'error',
   'localRules/require-override-for-abstract': 'error',
   'localRules/require-backing-matches-abstract': 'error',
+  'localRules/no-readonly-widening': 'error',
 }
 
 /** @type {import('eslint').Linter.Config} */
