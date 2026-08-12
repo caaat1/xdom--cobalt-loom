@@ -3,55 +3,43 @@ import { test } from 'node:test'
 
 import { DocumentBlueprint } from '../../../src/(node)/(parent)/document/blueprint/class.js'
 
-// DocumentBlueprint doesn't override nodeParentChildAccumulator or
-// nodeParentChildValidator at all, and only supplies the registration chain
-// for _nodeParentChildAllowed -- it's a real, minimal concrete instantiation
-// of NodeParentBlueprint, so it's used directly here rather than fabricating
-// a fake NodeParentBundle/NodeChildBundle pairing.
+// DocumentBlueprint doesn't override childAccumulator or childValidator at
+// all, and only supplies the registration chain for _childAllowed -- it's a
+// real, minimal concrete instantiation of NodeParentBlueprint, so it's used
+// directly here rather than fabricating a fake NodeParentBundle/
+// NodeChildBundle pairing.
 
-await test('nodeParentChildAccumulator is lazily cached: repeated access returns the same instance', () => {
+await test('childAccumulator is lazily cached: repeated access returns the same instance', () => {
   const blueprint = new DocumentBlueprint()
-  assert.equal(
-    blueprint.nodeParentChildAccumulator,
-    blueprint.nodeParentChildAccumulator
-  )
+  assert.equal(blueprint.childAccumulator, blueprint.childAccumulator)
 })
 
-await test('nodeParentChildValidator is lazily cached: repeated access returns the same instance', () => {
+await test('childValidator is lazily cached: repeated access returns the same instance', () => {
   const blueprint = new DocumentBlueprint()
-  assert.equal(
-    blueprint.nodeParentChildValidator,
-    blueprint.nodeParentChildValidator
-  )
+  assert.equal(blueprint.childValidator, blueprint.childValidator)
 })
 
-await test('nodeParentChildAllowed returns the same instance on repeated access', () => {
+await test('childAllowed returns the same instance on repeated access', () => {
   const blueprint = new DocumentBlueprint()
-  assert.equal(
-    blueprint.nodeParentChildAllowed,
-    blueprint.nodeParentChildAllowed
-  )
+  assert.equal(blueprint.childAllowed, blueprint.childAllowed)
 })
 
-await test('two instances of the same concrete blueprint class do not share a nodeParentChildAccumulator, nodeParentChildValidator, or nodeParentChildAllowed', () => {
+await test('two instances of the same concrete blueprint class do not share a childAccumulator, childValidator, or childAllowed', () => {
   const a = new DocumentBlueprint()
   const b = new DocumentBlueprint()
 
-  assert.notEqual(a.nodeParentChildAccumulator, b.nodeParentChildAccumulator)
-  assert.notEqual(a.nodeParentChildValidator, b.nodeParentChildValidator)
-  assert.notEqual(a.nodeParentChildAllowed, b.nodeParentChildAllowed)
+  assert.notEqual(a.childAccumulator, b.childAccumulator)
+  assert.notEqual(a.childValidator, b.childValidator)
+  assert.notEqual(a.childAllowed, b.childAllowed)
 })
 
-// DocumentBlueprint builds _nodeParentChildAllowed by chaining
-// .registerChildAllowed(...) directly off this.nodeParentChildValidator, and
+// DocumentBlueprint builds _childAllowed by chaining
+// .registerChildAllowed(...) directly off this.childValidator, and
 // registerChildAllowed mutates its receiver's internal map and returns
 // `this` rather than a new instance (see NodeParentChildValidator's own
-// implementation) -- so nodeParentChildAllowed and nodeParentChildValidator
-// end up being the exact same underlying object, not just equal-shaped ones.
-await test('nodeParentChildAllowed is the same underlying object as nodeParentChildValidator, not a separate one', () => {
+// implementation) -- so childAllowed and childValidator end up being the
+// exact same underlying object, not just equal-shaped ones.
+await test('childAllowed is the same underlying object as childValidator, not a separate one', () => {
   const blueprint = new DocumentBlueprint()
-  assert.equal(
-    blueprint.nodeParentChildAllowed,
-    blueprint.nodeParentChildValidator
-  )
+  assert.equal(blueprint.childAllowed, blueprint.childValidator)
 })

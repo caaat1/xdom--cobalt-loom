@@ -23,8 +23,8 @@ function makeTraverser(
 ): MoleculeTraverser<number, string, unknown> {
   return new MoleculeTraverser({
     castToAtom,
-    expectedType: 'a test molecule',
     handle,
+    typeExpected: 'a test molecule',
     typeGuard,
   })
 }

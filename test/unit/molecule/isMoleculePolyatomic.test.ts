@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { isMoleculePolyatomic } from '../../../src/tool/(molecule)/polyatomic/type.js'
+import { isMoleculePolyatomic } from '../../../src/tool/(molecule)/polyatomic/is/function.js'
 
 const typeGuard = {
   isAtom: (value: unknown): value is number => typeof value === 'number',
