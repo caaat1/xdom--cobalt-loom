@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { safeTraverseObjectProperty } from '../../../src/tool/object/property/(traverse)/safe/function.js'
+import { traverseObjectSafe } from '../../../src/tool/object/(traverse)/safe/function.js'
 
-await test('safeTraverseObjectProperty is a no-op for null', () => {
+await test('traverseObjectSafe is a no-op for null', () => {
   let calls = 0
-  safeTraverseObjectProperty({
+  traverseObjectSafe({
     cb: () => {
       calls++
     },
@@ -14,9 +14,9 @@ await test('safeTraverseObjectProperty is a no-op for null', () => {
   assert.equal(calls, 0)
 })
 
-await test('safeTraverseObjectProperty is a no-op for a primitive value', () => {
+await test('traverseObjectSafe is a no-op for a primitive value', () => {
   let calls = 0
-  safeTraverseObjectProperty({
+  traverseObjectSafe({
     cb: () => {
       calls++
     },
@@ -25,9 +25,9 @@ await test('safeTraverseObjectProperty is a no-op for a primitive value', () => 
   assert.equal(calls, 0)
 })
 
-await test('safeTraverseObjectProperty calls cb for every own data property', () => {
+await test('traverseObjectSafe calls cb for every own data property', () => {
   const seen: [string | symbol, unknown][] = []
-  safeTraverseObjectProperty({
+  traverseObjectSafe({
     cb: ({ key, value }) => {
       seen.push([key, value])
     },
@@ -39,7 +39,7 @@ await test('safeTraverseObjectProperty calls cb for every own data property', ()
   ])
 })
 
-await test('safeTraverseObjectProperty skips accessor properties by default', () => {
+await test('traverseObjectSafe skips accessor properties by default', () => {
   const obj = {
     a: 1,
     get b(): number {
@@ -47,7 +47,7 @@ await test('safeTraverseObjectProperty skips accessor properties by default', ()
     },
   }
   const seenKeys: (string | symbol)[] = []
-  safeTraverseObjectProperty({
+  traverseObjectSafe({
     cb: ({ key }) => {
       seenKeys.push(key)
     },
@@ -56,7 +56,7 @@ await test('safeTraverseObjectProperty skips accessor properties by default', ()
   assert.deepEqual(seenKeys, ['a'])
 })
 
-await test('safeTraverseObjectProperty calls cb for an accessor when readAccessors is true', () => {
+await test('traverseObjectSafe calls cb for an accessor when readAccessors is true', () => {
   const obj = {
     a: 1,
     get b(): number {
@@ -64,7 +64,7 @@ await test('safeTraverseObjectProperty calls cb for an accessor when readAccesso
     },
   }
   const seen: [string | symbol, unknown][] = []
-  safeTraverseObjectProperty({
+  traverseObjectSafe({
     cb: ({ key, value }) => {
       seen.push([key, value])
     },
@@ -77,7 +77,7 @@ await test('safeTraverseObjectProperty calls cb for an accessor when readAccesso
   ])
 })
 
-await test('safeTraverseObjectProperty silently skips a property whose accessor throws', () => {
+await test('traverseObjectSafe silently skips a property whose accessor throws', () => {
   const obj = {
     a: 1,
     get b(): number {
@@ -87,7 +87,7 @@ await test('safeTraverseObjectProperty silently skips a property whose accessor 
   }
   const seenKeys: (string | symbol)[] = []
   assert.doesNotThrow(() => {
-    safeTraverseObjectProperty({
+    traverseObjectSafe({
       cb: ({ key }) => {
         seenKeys.push(key)
       },
