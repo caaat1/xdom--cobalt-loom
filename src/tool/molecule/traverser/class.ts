@@ -1,5 +1,5 @@
 import { isAtomUnion } from '../../(molecule)/(atom)/union/is/function.js'
-import { isMoleculePolyatomic } from '../../(molecule)/polyatomic/type.js'
+import { isMoleculePolyatomic } from '../../(molecule)/polyatomic/is/function.js'
 import type { TypeDescription } from '../../type/description/type.js'
 import { MoleculeBundleArray } from '../bundle/array/class.js'
 import type { MoleculeBundle } from '../bundle/type.js'
@@ -9,7 +9,7 @@ import type { MoleculePath } from '../path/type.js'
 import { MoleculeTypeError } from '../type/error.js'
 import type { Molecule } from '../type.js'
 
-import type { HandleParam } from './handle/param/type.js'
+import type { TraverserHandleParam } from './handle/param/type.js'
 
 export class MoleculeTraverser<T_Atom, T_AtomShorthand, T_StaticData> {
   readonly traverse: <T extends T_StaticData>(param: {
@@ -37,18 +37,20 @@ export class MoleculeTraverser<T_Atom, T_AtomShorthand, T_StaticData> {
       )
   }
   constructor({
-    expectedType,
-    typeGuard,
     castToAtom,
     handle,
+    typeExpected,
+    typeGuard,
   }: {
-    expectedType: TypeDescription
+    castToAtom: (atomShorthand: T_AtomShorthand) => T_Atom
+    handle: <T extends T_StaticData>(
+      param: TraverserHandleParam<T_Atom, T>
+    ) => void
+    typeExpected: TypeDescription
     typeGuard: {
       isAtom: (molecule: unknown) => molecule is T_Atom
       isAtomShorthand: (molecule: unknown) => molecule is T_AtomShorthand
     }
-    castToAtom: (atomShorthand: T_AtomShorthand) => T_Atom
-    handle: <T extends T_StaticData>(param: HandleParam<T_Atom, T>) => void
   }) {
     this.traverse = <T extends T_StaticData>({
       molecule,
@@ -83,7 +85,7 @@ export class MoleculeTraverser<T_Atom, T_AtomShorthand, T_StaticData> {
           this.#pushMolecule({ entries, moleculePath, stack })
         } else {
           throw new MoleculeTypeError({
-            expectedType,
+            typeExpected,
             moleculeBundle: { molecule, moleculePath },
           })
         }

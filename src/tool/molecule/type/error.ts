@@ -2,17 +2,16 @@ import type { TypeDescription } from '../../type/description/type.js'
 import type { MoleculeBundle } from '../bundle/type.js'
 import type { MoleculePath } from '../path/type.js'
 
-type ActualType = string
 export class MoleculeTypeError extends Error {
   constructor({
-    expectedType,
+    typeExpected,
     moleculeBundle,
   }: {
-    expectedType?: TypeDescription
+    typeExpected?: TypeDescription
     moleculeBundle: MoleculeBundle<unknown, MoleculePath>
   }) {
     const { molecule, moleculePath } = moleculeBundle
-    const actualType: ActualType =
+    const typeActual: string =
       typeof molecule === 'object'
         ? molecule === null
           ? 'null'
@@ -22,7 +21,7 @@ export class MoleculeTypeError extends Error {
         : typeof molecule
     super(
       `Invalid molecule type at path ${moleculePath.join('.')}: ` +
-        `expected ${expectedType}, but got some ${actualType}`
+        `expected ${typeExpected}, but got some ${typeActual}`
     )
     this.name = this.constructor.name
   }

@@ -1,0 +1,1 @@
+export const moleculePolyatomicTypeDescription = `MoleculePolyatomic is a molecule that is either an array or an object, where all values are valid molecules (either atoms, atom shorthands, or nested polyatomics).`
