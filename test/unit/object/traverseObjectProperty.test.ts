@@ -3,7 +3,7 @@ import { test } from 'node:test'
 
 import { traverseObject } from '../../../src/tool/object/traverse/function.js'
 
-await test('traverseObjectProperty visits every own enumerable string key and returns true', () => {
+await test('traverseObject visits every own enumerable string key and returns true', () => {
   const visited: (string | symbol)[] = []
   const result = traverseObject({
     obj: { a: 1, b: 2, c: 3 },
@@ -17,7 +17,7 @@ await test('traverseObjectProperty visits every own enumerable string key and re
   assert.equal(result, true)
 })
 
-await test('traverseObjectProperty stops immediately when visit returns abort', () => {
+await test('traverseObject stops immediately when visit returns abort', () => {
   const visited: (string | symbol)[] = []
   const result = traverseObject({
     obj: { a: 1, b: 2, c: 3 },
@@ -31,7 +31,7 @@ await test('traverseObjectProperty stops immediately when visit returns abort', 
   assert.equal(result, false)
 })
 
-await test('traverseObjectProperty continues past a key when visit returns skip', () => {
+await test('traverseObject continues past a key when visit returns skip', () => {
   const visited: (string | symbol)[] = []
   const result = traverseObject({
     obj: { a: 1, b: 2, c: 3 },
@@ -45,7 +45,7 @@ await test('traverseObjectProperty continues past a key when visit returns skip'
   assert.equal(result, true)
 })
 
-await test('traverseObjectProperty ignores non-enumerable keys unless includeNonEnumerable is set', () => {
+await test('traverseObject ignores non-enumerable keys unless includeNonEnumerable is set', () => {
   const obj: { a: number; hidden?: number } = { a: 1 }
   Object.defineProperty(obj, 'hidden', { value: 2, enumerable: false })
 
@@ -72,7 +72,7 @@ await test('traverseObjectProperty ignores non-enumerable keys unless includeNon
   assert.deepEqual(fullVisited.sort(), ['a', 'hidden'])
 })
 
-await test('traverseObjectProperty ignores symbol keys unless includeSymbols is set', () => {
+await test('traverseObject ignores symbol keys unless includeSymbols is set', () => {
   const sym = Symbol('s')
   const obj = { a: 1, [sym]: 2 }
 
@@ -99,7 +99,7 @@ await test('traverseObjectProperty ignores symbol keys unless includeSymbols is 
   assert.deepEqual(fullVisited, ['a', sym])
 })
 
-await test('traverseObjectProperty readValue reads a data property lazily', () => {
+await test('traverseObject readValue reads a data property lazily', () => {
   const values: unknown[] = []
   traverseObject({
     obj: { a: 1, b: 2 },
@@ -112,7 +112,7 @@ await test('traverseObjectProperty readValue reads a data property lazily', () =
   assert.deepEqual(values, [1, 2])
 })
 
-await test('traverseObjectProperty readValue returns undefined for an accessor unless readAccessors is set', () => {
+await test('traverseObject readValue returns undefined for an accessor unless readAccessors is set', () => {
   const obj = {
     get a(): number {
       return 1
