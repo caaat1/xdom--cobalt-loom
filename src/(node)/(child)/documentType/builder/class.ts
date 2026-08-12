@@ -3,11 +3,11 @@ import { backMethod } from '../../../../tool/(decorator)/(member)/method/back/fu
 import type { NodeChildBuilder } from '../../../child/builder/type.js'
 import { DocumentTypeBuilt } from '../built/class.js'
 import type { DocumentTypeBundle } from '../bundle/type.js'
-import type { DocumentTypeParamBundle } from '../param/bundle/type.js'
+import type { DocumentTypeParamMapBundle } from '../param/map/bundle/type.js'
 
 export class DocumentTypeBuilder
-  extends NodeBuilder<DocumentTypeBundle, DocumentTypeParamBundle>
-  implements NodeChildBuilder<DocumentTypeBundle, DocumentTypeParamBundle>
+  extends NodeBuilder<DocumentTypeBundle, DocumentTypeParamMapBundle>
+  implements NodeChildBuilder<DocumentTypeBundle, DocumentTypeParamMapBundle>
 {
   @backMethod protected override createNode({
     doc,
@@ -22,7 +22,7 @@ export class DocumentTypeBuilder
     )
   }
   @backMethod
-  protected override getParamDefault(): DocumentTypeParamBundle[1][1] {
+  protected override getParamDefault(): DocumentTypeParamMapBundle['default'] {
     return {
       qualifiedName: 'html',
       publicId: '',

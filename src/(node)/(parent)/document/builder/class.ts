@@ -4,12 +4,12 @@ import { backMethod } from '../../../../tool/(decorator)/(member)/method/back/fu
 import { NodeParentBuilder } from '../../../parent/builder/class.js'
 import { DocumentBuilt } from '../built/class.js'
 import type { DocumentBundle } from '../bundle/type.js'
-import type { DocumentParamBundle } from '../param/bundle/type.js'
+import type { DocumentParamMapBundle } from '../param/map/bundle/type.js'
 
 export class DocumentBuilder extends NodeParentBuilder<
   DocumentBundle,
   CommentBundle | DocumentTypeBundle,
-  DocumentParamBundle
+  DocumentParamMapBundle
 > {
   @backMethod protected override createNode({
     doc,
@@ -19,7 +19,7 @@ export class DocumentBuilder extends NodeParentBuilder<
     return doc
   }
   @backMethod
-  protected override getParamDefault(): DocumentParamBundle[1][1] {
+  protected override getParamDefault(): DocumentParamMapBundle['default'] {
     return {}
   }
   @backMethod protected override build(): DocumentBuilt {

@@ -7,5 +7,11 @@
  * wrapping expression, a trailing `,`, ...) onto a different line.
  */
 export interface _lf {
+  // Method syntax is load-bearing here: `this` as a return type only
+  // resolves to "whatever concrete subtype this was called on" inside a
+  // method signature. A property/arrow-function type can't express that —
+  // it would have to fall back to the interface's own `_lf` type, losing the
+  // polymorphism the chainable no-op depends on.
+  // eslint-disable-next-line @typescript-eslint/method-signature-style -- polymorphic `this` return type requires method syntax; see comment above
   _lf(): this
 }

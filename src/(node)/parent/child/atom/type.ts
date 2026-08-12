@@ -7,4 +7,4 @@ export type NodeParentChildAtom<
     T_NodeChildBundle
   >,
   T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
-> = T_NodeChildBundle[1]
+> = T_NodeChildBundle['nodeBlueprint']

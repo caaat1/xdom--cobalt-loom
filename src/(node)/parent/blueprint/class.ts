@@ -13,40 +13,43 @@ export abstract class NodeParentBlueprint<
   >,
   T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
 > extends NodeBlueprint<T_NodeParentBundle> {
-  protected _nodeParentChildAccumulator?: typeof this.nodeParentChildAccumulator
-  protected _nodeParentChildValidator?: typeof this.nodeParentChildValidator
-  protected abstract readonly _nodeParentChildAllowed: typeof this.nodeParentChildAllowed
-  get nodeParentChildAccumulator(): NodeParentChildAccumulator<
+  protected _childAccumulator?: typeof this.childAccumulator
+  protected _childValidator?: typeof this.childValidator
+  protected abstract readonly _childAllowed: typeof this.childAllowed
+  get childAccumulator(): NodeParentChildAccumulator<
     T_NodeParentBundle,
     T_NodeChildBundle
   > {
-    return (this._nodeParentChildAccumulator ??= new NodeParentChildAccumulator<
+    return (this._childAccumulator ??= new NodeParentChildAccumulator<
       T_NodeParentBundle,
       T_NodeChildBundle
     >({ owner: this }))
   }
-  get nodeParentChildValidator(): NodeParentChildValidator<
-    T_NodeParentBundle[1]
+  get childValidator(): NodeParentChildValidator<
+    T_NodeParentBundle['nodeBlueprint']
   > {
-    return (this._nodeParentChildValidator ??= new NodeParentChildValidator<
-      T_NodeParentBundle[1]
+    return (this._childValidator ??= new NodeParentChildValidator<
+      T_NodeParentBundle['nodeBlueprint']
     >())
   }
-  get nodeParentChildAllowed(): NodeParentChildValidator<
-    T_NodeParentBundle[1],
-    T_NodeChildBundle[1]
+  get childAllowed(): NodeParentChildValidator<
+    T_NodeParentBundle['nodeBlueprint'],
+    T_NodeChildBundle['nodeBlueprint']
   > {
-    return this._nodeParentChildAllowed
+    return this._childAllowed
   }
   protected registerChildAllowed<T_NodeChildBlueprint>(
     childCtor: NodeBlueprintCtorWide<T_NodeChildBlueprint>,
     validator:
-      | NodeParentChildValidatorCb<T_NodeParentBundle[1], T_NodeChildBlueprint>
+      | NodeParentChildValidatorCb<
+          T_NodeParentBundle['nodeBlueprint'],
+          T_NodeChildBlueprint
+        >
       | undefined
-  ): NodeParentChildValidator<T_NodeParentBundle[1], T_NodeChildBlueprint> {
-    return this.nodeParentChildValidator.registerChildAllowed(
-      childCtor,
-      validator
-    )
+  ): NodeParentChildValidator<
+    T_NodeParentBundle['nodeBlueprint'],
+    T_NodeChildBlueprint
+  > {
+    return this.childValidator.registerChildAllowed(childCtor, validator)
   }
 }

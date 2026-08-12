@@ -1,7 +1,7 @@
 import { NodeBuilder } from '../../../node/builder/class.js'
-import type { NodeParamKeyPartial } from '../../../node/param/(key)/partial/type.js'
-import type { NodeParamBundle } from '../../../node/param/bundle/type.js'
-import type { NodeParam } from '../../../node/param/type.js'
+import type { NodeParamMapBundle } from '../../../node/param/map/bundle/alt/type.js'
+import type { NodeParamMapPartial } from '../../../node/param/map/partial/type.js'
+import type { NodeParamMapRequired } from '../../../node/param/map/required/type.js'
 import type { NodeChildBundle } from '../../child/bundle/type.js'
 import type { NodeParentBundle } from '../bundle/type.js'
 
@@ -11,12 +11,12 @@ export abstract class NodeParentBuilder<
     T_NodeChildBundle
   >,
   T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
-  T_NodeParentParamBundle extends NodeParamBundle<
-    NodeParam,
-    NodeParamKeyPartial
+  T_NodeParamMapBundle extends NodeParamMapBundle<
+    NodeParamMapPartial,
+    NodeParamMapRequired
   >,
-> extends NodeBuilder<T_NodeParentBundle, T_NodeParentParamBundle> {
-  protected buildChildren({ node }: { node: T_NodeParentBundle[0] }): [] {
+> extends NodeBuilder<T_NodeParentBundle, T_NodeParamMapBundle> {
+  protected buildChildren({ node }: { node: T_NodeParentBundle['node'] }): [] {
     void node
     return []
   }

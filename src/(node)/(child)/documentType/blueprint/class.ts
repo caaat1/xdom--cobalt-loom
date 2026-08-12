@@ -4,7 +4,7 @@ import type { MoleculePath } from '../../../../tool/molecule/path/type.js'
 import type { NodeChildBlueprint } from '../../../child/blueprint/type.js'
 import { DocumentTypeBuilder } from '../builder/class.js'
 import type { DocumentTypeBundle } from '../bundle/type.js'
-import type { DocumentTypeParamBundle } from '../param/bundle/type.js'
+import type { DocumentTypeParamMapPartial } from '../param/map/partial/type.js'
 
 export class DocumentTypeBlueprint
   extends NodeBlueprint<DocumentTypeBundle>
@@ -18,9 +18,8 @@ export class DocumentTypeBlueprint
     docSource: {
       doc: Document
     }
-
     moleculePath?: MoleculePath | undefined
-    param?: DocumentTypeParamBundle[1][0] | undefined
+    param?: DocumentTypeParamMapPartial | undefined
   }): DocumentTypeBuilder {
     return new DocumentTypeBuilder({
       docSource,

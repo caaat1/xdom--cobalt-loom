@@ -1,5 +1,5 @@
 import { NodeBuilt } from '../../../../node/built/class.js'
-import type { NodeBundle } from '../../../../node/bundle/type.js'
+import type { NodeBundle } from '../../../../node/bundle/alt/type.js'
 import type { NodeChildBuilt } from '../../../child/built/type.js'
 import type { CharacterDataBlueprint } from '../blueprint/class.js'
 

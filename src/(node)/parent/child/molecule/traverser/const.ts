@@ -16,7 +16,7 @@
 //   Stringifiable,
 //   StaticData
 // > = new MoleculeTraverser({
-//   expectedType: NodeBlueprint.name,
+//   typeExpected: NodeBlueprint.name,
 //   typeGuard: {
 //     isAtom: isChildAtom,
 //     isShorthand: (molecule: unknown): molecule is Stringifiable =>

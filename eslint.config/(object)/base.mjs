@@ -159,6 +159,14 @@ export const baseRules = {
     },
   ],
   '@typescript-eslint/explicit-module-boundary-types': 'off',
+  // TS checks method-syntax parameters bivariantly (unsound, kept for
+  // backward compat with common JS/DOM override patterns), but checks
+  // property-typed function parameters strictly contravariantly under
+  // strictFunctionTypes. Forcing property syntax on interface/object-type
+  // method signatures gets tsc's strict checking for free here — though it
+  // can't reach class MethodDefinitions, only TSMethodSignature nodes, so a
+  // class's own method declarations stay bivariant regardless of this rule.
+  '@typescript-eslint/method-signature-style': ['error', 'property'],
   '@typescript-eslint/no-base-to-string': 'error',
   '@typescript-eslint/no-dupe-class-members': 'error',
   '@typescript-eslint/no-explicit-any': 'error',

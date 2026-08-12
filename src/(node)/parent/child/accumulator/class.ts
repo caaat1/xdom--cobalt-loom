@@ -12,7 +12,7 @@ export class NodeParentChildAccumulator<
   T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
 > extends UserInputHandler<
   NodeParentChildMolecule<T_NodeParentBundle, T_NodeChildBundle>,
-  T_NodeParentBundle[1]
+  T_NodeParentBundle['nodeBlueprint']
 > {
   protected override canSetSafely(
     value: unknown

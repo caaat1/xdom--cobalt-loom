@@ -1,4 +1,4 @@
-import type { NodeBundle } from '../../../node/bundle/type.js'
+import type { NodeBundle } from '../../../node/bundle/alt/type.js'
 import type { NodeElementBlueprint } from '../blueprint/type.js'
 import type { NodeElement } from '../type.js'
 

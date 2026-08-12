@@ -4,20 +4,23 @@ import type { _lf } from '../../tool/_lf/interface.js'
 import { MoleculePath } from '../../tool/molecule/path/class.js'
 import type { NodeBlueprint } from '../blueprint/class.js'
 import type { NodeBuilt } from '../built/class.js'
-import type { NodeBundle } from '../bundle/type.js'
-import type { NodeParamKeyPartial } from '../param/(key)/partial/type.js'
-import type { NodeParamBundle } from '../param/bundle/type.js'
-import type { NodeParam } from '../param/type.js'
+import type { NodeBundle } from '../bundle/alt/type.js'
+import type { NodeParamMapPartialDefault } from '../param/map/(partial)/default/type.js'
+import type { NodeParamMapBundle } from '../param/map/bundle/alt/type.js'
+import type { NodeParamMapRequired } from '../param/map/required/type.js'
 
 export abstract class NodeBuilder<
   T_NodeBundle extends NodeBundle<Node, NodeBlueprint<T_NodeBundle>>,
-  // TODO: check what happens when using ```keyof T_NodeParamBundle``` instead of ```NodeParamKeyPartial```
-  T_NodeParamBundle extends NodeParamBundle<NodeParam, NodeParamKeyPartial>,
+  T_NodeParamMapBundle extends NodeParamMapBundle<
+    NodeParamMapPartialDefault,
+    NodeParamMapRequired
+  >,
 > implements _lf {
   readonly doc: Document
   readonly moleculePath: MoleculePath
-  readonly nodeBlueprint: T_NodeBundle[1]
-  readonly param: T_NodeParamBundle[0]
+  readonly nodeBlueprint: T_NodeBundle['nodeBlueprint']
+  readonly param: T_NodeParamMapBundle['default'] &
+    T_NodeParamMapBundle['required']
   constructor({
     docSource,
     moleculePath,
@@ -28,8 +31,10 @@ export abstract class NodeBuilder<
       doc: Document
     }
     moleculePath?: MoleculePath | undefined
-    nodeBlueprint: T_NodeBundle[1]
-    param: T_NodeParamBundle[1][0] | undefined
+    nodeBlueprint: T_NodeBundle['nodeBlueprint']
+    param?: T_NodeParamMapBundle['partial'] | undefined
+    // separate with param:
+    // OR: param: T_NodeParamMapBundle // of partial and required
   }) {
     this.doc = docSource.doc
     this.moleculePath = moleculePath ?? new MoleculePath()
@@ -40,8 +45,9 @@ export abstract class NodeBuilder<
     }
   }
   protected abstract build(): NodeBuilt<T_NodeBundle>
-  protected abstract createNode(param: DocumentBound): T_NodeBundle[0]
-  protected abstract getParamDefault(): T_NodeParamBundle[1][1]
+  protected abstract createNode(param: DocumentBound): T_NodeBundle['node']
+  protected abstract getParamDefault(): T_NodeParamMapBundle['default']
+
   /** @inheritdoc */
   @implementMethod('_lf') _lf(): this {
     return this
