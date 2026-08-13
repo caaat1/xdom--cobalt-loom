@@ -80,4 +80,12 @@ const raw = [
     bpf: 555,
     lpf: 14,
   },
+  {
+    t: '08/13 09:47',
+    files: 200,
+    lines: 2850,
+    bytes: 111017,
+    bpf: 555,
+    lpf: 14,
+  },
 ]
