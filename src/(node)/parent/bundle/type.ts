@@ -4,9 +4,9 @@ import type { NodeParentBlueprint } from '../blueprint/class.js'
 import type { NodeParent } from '../type.js'
 
 export type NodeParentBundle<
-  T_NodeParentBundle extends NodeBundle<
-    NodeParent,
-    NodeParentBlueprint<T_NodeParentBundle, T_NodeChildBundle>
+  T_NodeParentBundle extends NodeParentBundle<
+    T_NodeParentBundle,
+    T_NodeChildBundle
   >,
   T_NodeChildBundle extends NodeChildBundle<T_NodeChildBundle>,
 > = NodeBundle<
