@@ -5,11 +5,11 @@ import { backProperty } from '../../../../tool/(decorator)/(member)/property/bac
 import type { MoleculePath } from '../../../../tool/molecule/path/type.js'
 import { NodeParentBlueprint } from '../../../parent/blueprint/class.js'
 import { DocumentBuilder } from '../builder/class.js'
-import type { DocumentParentBundle } from '../bundle/type.js'
+import type { DocumentBundle } from '../bundle/type.js'
 
 export class DocumentBlueprint extends NodeParentBlueprint<
-  DocumentParentBundle['parent'],
-  DocumentParentBundle['child']
+  DocumentBundle['parent'],
+  DocumentBundle['child']
 > {
   @backProperty
   protected override readonly _childAllowed = this.childValidator
